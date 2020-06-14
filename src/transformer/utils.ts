@@ -1,68 +1,25 @@
-import path from 'path';
 import ts from 'typescript';
 
-export const createValueCheckFunction = (comparison: (valueNode: ts.Identifier) => ts.Expression): ts.ArrowFunction => {
-  const value: ts.Identifier = ts.createIdentifier('value');
-
-  return ts.createArrowFunction(
-    /* modifiers */ undefined,
-    /* typeParameters */ undefined,
-    [
-      ts.createParameter(
-        /* decorators */ undefined,
-        /* modifiers */ undefined,
-        /* dotDotDotToken */ undefined,
-        /* name */ value,
-      ),
-    ],
-    undefined,
-    ts.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
-    comparison(value),
-  );
-};
-
-const indexJs = path.join(__dirname, '..', 'index.js');
-export const isOurImportExpression = (node: ts.Node): node is ts.ImportDeclaration => {
-  if (!ts.isImportDeclaration(node)) return false;
-
-  try {
-    const module = (node.moduleSpecifier as ts.StringLiteral).text;
-    const isModulePathRelative = module.startsWith('.');
-    const resolvedPath = require.resolve(
-      isModulePathRelative ? path.resolve(path.dirname(node.getSourceFile().fileName), module) : module,
-    );
-
-    return indexJs === resolvedPath;
-  } catch (e) {
-    return false;
-  }
-};
-
-const indexTs = path.join(__dirname, '..', 'index.d.ts');
-export const isOurCallExpression = (
-  node: ts.Node,
-  name: string,
-  typeChecker: ts.TypeChecker,
-): node is ts.CallExpression => {
-  if (!ts.isCallExpression(node)) return false;
-
-  const declaration = typeChecker.getResolvedSignature(node)?.declaration;
-  return (
-    // Declaration must be there
-    !!declaration &&
-    // It must not be JSDoc
-    !ts.isJSDocSignature(declaration) &&
-    // It has to come from our .d.ts definition file
-    path.join(declaration.getSourceFile().fileName) === indexTs &&
-    // And its name must match the expected name
-    declaration.name?.getText() === name
-  );
-};
-
+/**
+ * Helper debugging function that takes a type as a parameter and returns
+ * a human-readable list of its flags
+ *
+ * @param type {ts.Type}
+ *
+ * @returns {String[]} Array of type flags names
+ */
 export const typeFlags = (type: ts.Type): string[] => {
   return Object.keys(ts.TypeFlags).filter((flagName) => !!((ts.TypeFlags[flagName as any] as any) & type.flags));
 };
 
+/**
+ * Helper debugging function that takes a type as a parameter and returns
+ * a human-readable list of its object flags (if it has any)
+ *
+ * @param type {ts.Type}
+ *
+ * @returns {String[]} Array of object flags names
+ */
 export const objectFlags = (type: ts.Type): string[] => {
   const objectFlags = (type as ts.TypeReference).objectFlags;
   if (typeof objectFlags !== 'number') return [];
@@ -70,19 +27,71 @@ export const objectFlags = (type: ts.Type): string[] => {
   return Object.keys(ts.ObjectFlags).filter((flagName) => !!((ts.ObjectFlags[flagName as any] as any) & objectFlags));
 };
 
-export const addTypeCheckerMap = (
-  file: ts.SourceFile,
-  identifier: ts.Identifier,
-  properties: ts.PropertyAssignment[],
-): ts.SourceFile => {
-  return ts.updateSourceFileNode(file, [
-    ts.createVariableStatement(/* modifiers */ undefined, [
-      ts.createVariableDeclaration(
-        identifier,
-        /* type */ undefined,
-        ts.createObjectLiteral(/* properties */ properties, /* multiline */ true),
-      ),
-    ]),
-    ...file.statements,
-  ]);
+/**
+ * Helper debugging function that takes a Symbol as a parameter and returns
+ * a human-readable list of its flags
+ *
+ * @param type {ts.Symbol}
+ *
+ * @returns {String[]} Array of symbol flags names
+ */
+export const getSymbolFlags = (symbol: ts.Symbol): string[] => {
+  return Object.keys(ts.SymbolFlags).filter((flagName) => !!((ts.SymbolFlags[flagName as any] as any) & symbol.flags));
+};
+
+/**
+ * Helper function that checkes whether the array of modifiers
+ * contains "private" or "protected" keywords.
+ *
+ * @param modifiers {ts.ModifiersArray} [undefined] The array of modifiers
+ */
+const hasPrivateOrProtectedModifiers = (modifiers?: ts.ModifiersArray): boolean =>
+  !!modifiers?.some(
+    (modifier) => modifier.kind === ts.SyntaxKind.PrivateKeyword || modifier.kind === ts.SyntaxKind.ProtectedKeyword,
+  );
+
+/**
+ * Helper function that checks whether a property represented by a Symbol
+ * is publicly visible, i.e. it does not have "private" or "protected" modifier
+ *
+ * @param property {ts.Symbol} Property symbol
+ */
+export const isPublicProperty = (property: ts.Symbol): boolean => {
+  const declaration = property.valueDeclaration;
+  if (!declaration) {
+    // TODO This is just a "guess", maybe the missing declaration can mean a private/protected property
+    return true;
+  }
+
+  if (
+    ts.isPropertySignature(declaration) ||
+    ts.isPropertyDeclaration(declaration) ||
+    ts.isMethodDeclaration(declaration) ||
+    ts.isMethodSignature(declaration) ||
+    ts.isParameter(declaration) ||
+    ts.isGetAccessor(declaration)
+  )
+    return !hasPrivateOrProtectedModifiers(declaration.modifiers);
+
+  return false;
+};
+
+export const getPropertyAccessor = (property: ts.Symbol): ts.Expression => {
+  const declaration = property.valueDeclaration;
+  if (!declaration) return ts.createStringLiteral(property.name);
+
+  if (
+    ts.isPropertySignature(declaration) ||
+    ts.isPropertyDeclaration(declaration) ||
+    ts.isMethodDeclaration(declaration) ||
+    ts.isMethodSignature(declaration)
+  ) {
+    if (ts.isComputedPropertyName(declaration.name)) return declaration.name.expression;
+  }
+
+  return ts.createStringLiteral(property.name);
+};
+
+export const publicProperties = (type: ts.Type): ts.Expression => {
+  return ts.createArrayLiteral(type.getApparentProperties().filter(isPublicProperty).map(getPropertyAccessor));
 };
