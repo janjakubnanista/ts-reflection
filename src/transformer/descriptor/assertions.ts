@@ -13,6 +13,9 @@ export const isString = (type: ts.Type, libraryDescriptorName?: LibraryTypeDescr
 export const isNumber = (type: ts.Type, libraryDescriptorName?: LibraryTypeDescriptorName): boolean =>
   !!(type.flags & ts.TypeFlags.Number) || libraryDescriptorName === 'Number';
 
+export const isSymbol = (type: ts.Type, libraryDescriptorName?: LibraryTypeDescriptorName): boolean =>
+  !!(type.flags & ts.TypeFlags.ESSymbol) || libraryDescriptorName === 'Symbol';
+
 export const isDate = (
   type: ts.Type,
   libraryDescriptorName?: LibraryTypeDescriptorName,

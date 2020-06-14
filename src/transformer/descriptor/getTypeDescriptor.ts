@@ -22,6 +22,7 @@ import {
   isPromise,
   isSet,
   isString,
+  isSymbol,
   isTrueKeyword,
   isTuple,
   isUndefined,
@@ -65,6 +66,13 @@ export const getTypeDescriptor = (
     logger.debug('String');
 
     return { _type: 'keyword', value: 'string' };
+  }
+
+  // Symbol
+  if (isSymbol(type, libraryDescriptorName)) {
+    logger.debug('Symbol');
+
+    return { _type: 'keyword', value: 'symbol' };
   }
 
   // Date
