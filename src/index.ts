@@ -62,7 +62,34 @@ export declare function typeCheckFor<T>(): (value: unknown) => value is T;
  */
 export declare function isA<T>(value: unknown): value is T;
 
-// If someone forgets to register ts-type-checked/transformer then tsc
+export type NameOfPropertyOfType<T, C = unknown> = NonNullable<
+  {
+    [K in keyof T]: T[K] extends C ? K : never;
+  }[keyof T]
+>;
+
+/**
+ * Returns and array of property names for a given interface / type.
+ *
+ * @example
+ * ```
+ * interface MyInterface {
+ *    name: string;
+ *    age: number;
+ * }
+ *
+ * const propertiesOfMyInterface = propertiesOf<MyInterface>();
+ * console.log(propertiesOfMyInterface); // ['name', 'age'];
+ * ```
+ *
+ * @function
+ * @template T Interface/type to get properties of
+ * @return {String[]} An array of property names of a given interface / type
+ */
+export declare function propertiesOf<T>(): NameOfPropertyOfType<T>[];
+
+
+// If someone forgets to register ts-reflection/transformer then tsc
 // is going to actually import this file which will throw this error
 // for easier problem solving
 throw new Error(
