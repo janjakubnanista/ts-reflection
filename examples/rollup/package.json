@@ -1,5 +1,5 @@
 {
-  "name": "@ts-type-checked-examples/rollup",
+  "name": "@ts-reflection-examples/rollup",
   "private": true,
   "version": "0.0.1",
   "scripts": {

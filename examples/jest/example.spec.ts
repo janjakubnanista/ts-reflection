@@ -1,7 +1,7 @@
 import 'jest';
 
 // @ts-ignore
-import { isA, typeCheckFor } from 'ts-type-checked';
+import { isA, typeCheckFor } from 'ts-reflection';
 
 interface User {
   name: string;
@@ -18,7 +18,7 @@ const getTypeName = (value: unknown): string => {
 };
 
 describe('example tests', () => {
-  test('ts-type-checked should work with jest', () => {
+  test('ts-reflection should work with jest', () => {
     expect(getTypeName('hey')).toBe('String');
     expect(getTypeName('')).toBe('String');
 

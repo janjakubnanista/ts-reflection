@@ -4,7 +4,7 @@ It looks like you are trying to type check a function-like value (${typeName}).
 Due to very nature of JavaScript it's not possible to see what the return type of a function is
 or what the signature of a function was.
 
-ts-type-checked can only check whether something is of type function, nothing more. Sorry :(
+ts-reflection can only check whether something is of type function, nothing more. Sorry :(
 
 `;
 

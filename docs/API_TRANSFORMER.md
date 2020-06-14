@@ -1,21 +1,21 @@
 <h1>
-  <img height="56px" width="auto" src="https://raw.githubusercontent.com/janjakubnanista/ts-type-checked/master/res/ts-type-checked.png" align="center"/>
-  <span>ts-type-checked</span>
+  <img height="56px" width="auto" src="https://raw.githubusercontent.com/janjakubnanista/ts-reflection/master/res/ts-reflection.png" align="center"/>
+  <span>ts-reflection</span>
 </h1>
 
-<a href="https://github.com/janjakubnanista/ts-type-checked">&lt; Back to project</a>
+<a href="https://github.com/janjakubnanista/ts-reflection">&lt; Back to project</a>
 
 # Transformer API
 
 ## `function transformer(program: ts.Program, options: TransformerOptions): (file: ts.SourceFile) => ts.SourceFile`
 
-The transformer function is exported from `ts-type-checked/transformer`:
+The transformer function is exported from `ts-reflection/transformer`:
 
 ```typescript
-import transformer from 'ts-type-checked/transformer';
+import transformer from 'ts-reflection/transformer';
 
 // Or equivalent
-const transfomer = require('ts-type-checked/transformer').default;
+const transfomer = require('ts-reflection/transformer').default;
 ```
 
 Please refer to the [installation section](./INSTALLATION.md) for more information on how to plug the transformer into your build.
@@ -75,7 +75,7 @@ You can pass options to the transformer via `tsconfig.json`:
   // ...
   "compilerOptions": {
     "plugins": [
-      { "transform": "ts-type-checked/transformer", "logLevel": "debug" },
+      { "transform": "ts-reflection/transformer", "logLevel": "debug" },
     ]
   },
   // ...

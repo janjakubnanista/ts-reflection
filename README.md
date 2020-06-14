@@ -1,10 +1,10 @@
 <!-- Logo -->
 <p align="center">
-  <img width="50%" src="https://raw.githubusercontent.com/janjakubnanista/ts-type-checked/master/res/ts-type-checked.png"/>
+  <img width="50%" src="https://raw.githubusercontent.com/janjakubnanista/ts-reflection/master/res/ts-reflection.png"/>
 </p>
 
 <h1 align="center">
-  ts-type-checked
+  ts-reflection
 </h1>
 
 <p align="center">
@@ -14,29 +14,29 @@
 <!-- The badges section -->
 <p align="center">
   <!-- Travis CI build status -->
-  <a href="https://travis-ci.org/janjakubnanista/ts-type-checked"><img alt="Build Status" src="https://travis-ci.org/janjakubnanista/ts-type-checked.svg?branch=master"/></a>
+  <a href="https://travis-ci.org/janjakubnanista/ts-reflection"><img alt="Build Status" src="https://travis-ci.org/janjakubnanista/ts-reflection.svg?branch=master"/></a>
   <!-- CircleCI build status -->
-  <a href="https://circleci.com/gh/janjakubnanista/ts-type-checked/tree/master"><img alt="CircleCI Build Status" src="https://circleci.com/gh/janjakubnanista/ts-type-checked.svg?style=shield"></a>
+  <a href="https://circleci.com/gh/janjakubnanista/ts-reflection/tree/master"><img alt="CircleCI Build Status" src="https://circleci.com/gh/janjakubnanista/ts-reflection.svg?style=shield"></a>
   <!-- Fury.io NPM published package version -->
-  <a href="https://www.npmjs.com/package/ts-type-checked"><img alt="NPM Version" src="https://badge.fury.io/js/ts-type-checked.svg"/></a>
+  <a href="https://www.npmjs.com/package/ts-reflection"><img alt="NPM Version" src="https://badge.fury.io/js/ts-reflection.svg"/></a>
   <!-- Shields.io dev dependencies status -->
-  <a href="https://github.com/janjakubnanista/ts-type-checked/blob/master/package.json"><img alt="Dev Dependency Status" src="https://img.shields.io/david/dev/janjakubnanista/ts-type-checked"/></a>
+  <a href="https://github.com/janjakubnanista/ts-reflection/blob/master/package.json"><img alt="Dev Dependency Status" src="https://img.shields.io/david/dev/janjakubnanista/ts-reflection"/></a>
   <!-- Snyk.io vulnerabilities badge -->
-  <a href="https://snyk.io/test/github/janjakubnanista/ts-type-checked"><img alt="Known Vulnerabilities" src="https://snyk.io/test/github/janjakubnanista/ts-type-checked/badge.svg"/></a>
+  <a href="https://snyk.io/test/github/janjakubnanista/ts-reflection"><img alt="Known Vulnerabilities" src="https://snyk.io/test/github/janjakubnanista/ts-reflection/badge.svg"/></a>
   <!-- Shields.io license badge -->
-  <a href="https://github.com/janjakubnanista/ts-type-checked/blob/master/LICENSE"><img alt="License" src="https://img.shields.io/npm/l/ts-type-checked"/></a>
+  <a href="https://github.com/janjakubnanista/ts-reflection/blob/master/LICENSE"><img alt="License" src="https://img.shields.io/npm/l/ts-reflection"/></a>
 </p>
 
-`ts-type-checked` generates [type guards](https://www.typescriptlang.org/docs/handbook/advanced-types.html#type-guards-and-differentiating-types) based on your own (or library) TypeScript types. It is compatible with [rollup](./docs/INSTALLATION.md#installation--rollup), [webpack](./docs/INSTALLATION.md#installation--webpack), and [ttypescript](./docs/INSTALLATION.md#installation--ttypescript) projects and works nicely with [jest](./docs/INSTALLATION.md#installation--jest) or [ts-node](./docs/INSTALLATION.md#installation--ts-node).
+`ts-reflection` generates [type guards](https://www.typescriptlang.org/docs/handbook/advanced-types.html#type-guards-and-differentiating-types) based on your own (or library) TypeScript types. It is compatible with [rollup](./docs/INSTALLATION.md#installation--rollup), [webpack](./docs/INSTALLATION.md#installation--webpack), and [ttypescript](./docs/INSTALLATION.md#installation--ttypescript) projects and works nicely with [jest](./docs/INSTALLATION.md#installation--jest) or [ts-node](./docs/INSTALLATION.md#installation--ts-node).
 
 <p align="center">
   <a href="#example-cases">Example cases</a>
   <span>|</span>
-  <a href="https://github.com/janjakubnanista/ts-type-checked/blob/master/docs/INSTALLATION.md">Installation</a>
+  <a href="https://github.com/janjakubnanista/ts-reflection/blob/master/docs/INSTALLATION.md">Installation</a>
   <span>|</span>
-  <a href="https://github.com/janjakubnanista/ts-type-checked/blob/master/docs/API.md">API</a>
+  <a href="https://github.com/janjakubnanista/ts-reflection/blob/master/docs/API.md">API</a>
   <span>|</span>
-  <a href="https://github.com/janjakubnanista/ts-type-checked/blob/master/docs/SUPPORTED_TYPES.md">Supported types</a>
+  <a href="https://github.com/janjakubnanista/ts-reflection/blob/master/docs/SUPPORTED_TYPES.md">Supported types</a>
 </p>
 
 ## Wait what?
@@ -75,7 +75,7 @@ if (isA<WelcomeMessage>(value)) {
 
 TypeScript is a powerful way of enhancing your application code at compile time but, unfortunately, provides no runtime type guards out of the box - you need to [create these manually](https://www.typescriptlang.org/docs/handbook/advanced-types.html#user-defined-type-guards). For types like `string` or `boolean` this is easy, you can just use the `typeof` operator. It becomes more difficult for interface types, arrays, enums etc. 
 
-**And that is where `ts-type-checked` comes in!** It automatically creates these type guards at compile time for you.
+**And that is where `ts-reflection` comes in!** It automatically creates these type guards at compile time for you.
 
 This might get useful when:
 
@@ -133,10 +133,10 @@ const isGoodbyeMessage = (value: any): value is GoodbyeMessage =>
   value.sayByeTo.every(name => typeof name === 'string');
 ```
 
-Annoying isn't it? Not only you need to define the guards yourself, you also need to make sure the types and the type guards don't drift apart as the code evolves. Let's try using `ts-type-checked`:
+Annoying isn't it? Not only you need to define the guards yourself, you also need to make sure the types and the type guards don't drift apart as the code evolves. Let's try using `ts-reflection`:
 
 ```typescript
-import { isA, typeCheckFor } from 'ts-type-checked';
+import { isA, typeCheckFor } from 'ts-reflection';
 
 // You can use typeCheckFor type guard factory
 const isWelcomeMessage = typeCheckFor<WelcomeMessage>();
@@ -150,10 +150,10 @@ if (isA<WelcomeMessage>(message)) {
 
 ### Type guard factories
 
-`ts-type-checked` exports `typeCheckFor` type guard factory. This is more or less a syntactic sugar that saves you couple of keystrokes. It is useful when you want to store the type guard into a variable or pass it as a parameter:
+`ts-reflection` exports `typeCheckFor` type guard factory. This is more or less a syntactic sugar that saves you couple of keystrokes. It is useful when you want to store the type guard into a variable or pass it as a parameter:
 
 ```typescript
-import { typeCheckFor } from 'ts-type-checked';
+import { typeCheckFor } from 'ts-reflection';
 
 interface Config {
   version: string;
@@ -178,7 +178,7 @@ const isString = (value: unknown): value is Config => isA<string>(value);
 
 ```typescript
 // in file typeGuards.ts
-import { typeCheckFor } from 'ts-type-checked';
+import { typeCheckFor } from 'ts-reflection';
 
 export const isDate = typeCheckFor<Date>();
 export const isStringRecord = typeCheckFor<Record<string, string>>();

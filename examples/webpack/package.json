@@ -1,5 +1,5 @@
 {
-  "name": "@ts-type-checked-examples/webpack",
+  "name": "@ts-reflection-examples/webpack",
   "version": "0.0.1",
   "private": true,
   "scripts": {

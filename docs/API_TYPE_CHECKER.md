@@ -1,16 +1,16 @@
 <h1>
-  <img height="56px" width="auto" src="https://raw.githubusercontent.com/janjakubnanista/ts-type-checked/master/res/ts-type-checked.png" align="center"/>
-  <span>ts-type-checked</span>
+  <img height="56px" width="auto" src="https://raw.githubusercontent.com/janjakubnanista/ts-reflection/master/res/ts-reflection.png" align="center"/>
+  <span>ts-reflection</span>
 </h1>
 
-<a href="https://github.com/janjakubnanista/ts-type-checked">&lt; Back to project</a>
+<a href="https://github.com/janjakubnanista/ts-reflection">&lt; Back to project</a>
 
 # Type checker API
 
-Two functions are exported: `isA` and `typeCheckFor`. (funny enough neither of them exist, just check [index.js](https://github.com/janjakubnanista/ts-type-checked/tree/master/src/index.ts) yourself :grinning:).
+Two functions are exported: `isA` and `typeCheckFor`. (funny enough neither of them exist, just check [index.js](https://github.com/janjakubnanista/ts-reflection/tree/master/src/index.ts) yourself :grinning:).
 
 ```typescript
-import { isA, typeCheckFor } from 'ts-type-checked';
+import { isA, typeCheckFor } from 'ts-reflection';
 ```
 
 #### `function isA<T>(value: unknown): value is T`

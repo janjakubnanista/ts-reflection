@@ -2,7 +2,7 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "plugins": [
-      { "transform": "ts-type-checked/transformer" }
+      { "transform": "ts-reflection/transformer" }
     ]
   }
 }

@@ -1,13 +1,13 @@
 {
-  "name": "ts-type-checked",
+  "name": "ts-reflection",
   "version": "0.3.5",
-  "description": "Type checking utilities for TypeScript.",
+  "description": "Type reflection utilities for TypeScript.",
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
     "build:source": "tsc",
     "build": "yarn build:source && yarn copy:meta && yarn lint:build",
-    "clean": "rm -rf dist && rm -rf sandbox && rm -rf test/node_modules/ts-type-checked && rm -rf examples/node_modules/ts-type-checked",
+    "clean": "rm -rf dist && rm -rf sandbox && rm -rf test/node_modules/ts-reflection && rm -rf examples/node_modules/ts-reflection",
     "copy:meta": "./scripts/copy-metadata.sh",
     "lint:source": "eslint . --fix --ext .ts,.tsx",
     "lint:build": "eslint ./dist --fix --ext .js,.ts",
@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/janjakubnanista/ts-type-checked.git"
+    "url": "git+https://github.com/janjakubnanista/ts-reflection.git"
   },
   "keywords": [
     "TypeScript",
@@ -30,7 +30,7 @@
   "author": "Jan Jakub Nanista <jan.jakub.nanista@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/janjakubnanista/ts-type-checked/issues"
+    "url": "https://github.com/janjakubnanista/ts-reflection/issues"
   },
   "files": [
     "index.js",
@@ -38,7 +38,7 @@
     "transformer/**/*.js",
     "transformer/**/*.d.ts"
   ],
-  "homepage": "https://github.com/janjakubnanista/ts-type-checked#readme",
+  "homepage": "https://github.com/janjakubnanista/ts-reflection#readme",
   "devDependencies": {
     "@types/node": "^14.0.9",
     "@typescript-eslint/eslint-plugin": "^3.1.0",

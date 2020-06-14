@@ -1,13 +1,13 @@
 <h1>
-  <img height="56px" width="auto" src="https://raw.githubusercontent.com/janjakubnanista/ts-type-checked/master/res/ts-type-checked.png" align="center"/>
-  <span>ts-type-checked</span>
+  <img height="56px" width="auto" src="https://raw.githubusercontent.com/janjakubnanista/ts-reflection/master/res/ts-reflection.png" align="center"/>
+  <span>ts-reflection</span>
 </h1>
 
-<a href="https://github.com/janjakubnanista/ts-type-checked">&lt; Back to project</a>
+<a href="https://github.com/janjakubnanista/ts-reflection">&lt; Back to project</a>
 
 # Supported types
 
-`ts-type-checked` supports (reasonably large but still only) a subset of TypeScript features:
+`ts-reflection` supports (reasonably large but still only) a subset of TypeScript features:
 
 <table width="100%" cellpadding="4">
   <thead>

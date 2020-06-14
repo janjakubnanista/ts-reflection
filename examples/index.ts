@@ -1,5 +1,5 @@
 // @ts-ignore
-import { typeCheckFor } from 'ts-type-checked';
+import { typeCheckFor } from 'ts-reflection';
 
 interface User {
   name: string;

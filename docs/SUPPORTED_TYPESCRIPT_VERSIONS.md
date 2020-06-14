@@ -1,13 +1,13 @@
 <h1>
-  <img height="56px" width="auto" src="https://raw.githubusercontent.com/janjakubnanista/ts-type-checked/master/res/ts-type-checked.png" align="center"/>
-  <span>ts-type-checked</span>
+  <img height="56px" width="auto" src="https://raw.githubusercontent.com/janjakubnanista/ts-reflection/master/res/ts-reflection.png" align="center"/>
+  <span>ts-reflection</span>
 </h1>
 
-<a href="https://github.com/janjakubnanista/ts-type-checked">&lt; Back to project</a>
+<a href="https://github.com/janjakubnanista/ts-reflection">&lt; Back to project</a>
 
 # Supported TypeScript versions
 
-`ts-type-checked` has an extensive E2E test suite found in the [test](https://github.com/janjakubnanista/ts-type-checked/tree/master/test) folder. This suite is being run against several TS versions (the list can be found [here](https://github.com/janjakubnanista/ts-type-checked/blob/master/scripts/versions.txt)):
+`ts-reflection` has an extensive E2E test suite found in the [test](https://github.com/janjakubnanista/ts-reflection/tree/master/test) folder. This suite is being run against several TS versions (the list can be found [here](https://github.com/janjakubnanista/ts-reflection/blob/master/scripts/versions.txt)):
 
 - `4.0.0-dev.20200514`
 - `3.9.2`

@@ -3246,7 +3246,7 @@ ts-jest@^25.2.1:
     semver "6.x"
     yargs-parser "18.x"
 
-"ts-type-checked@file:../dist":
+"ts-reflection@file:../dist":
   version "0.3.5"
 
 tslib@^1.10.0:
