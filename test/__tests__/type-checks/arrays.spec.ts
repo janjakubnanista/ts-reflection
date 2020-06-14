@@ -9,10 +9,10 @@ import {
   notOfType,
   numeric,
   primitive,
-} from './utils';
+} from '../utils';
 
 // @ts-ignore
-import { isA, typeCheckFor } from 'ts-type-checked';
+import { isA, typeCheckFor } from 'ts-reflection';
 import fc from 'fast-check';
 
 describe('arrays', () => {

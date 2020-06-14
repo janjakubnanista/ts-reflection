@@ -1,9 +1,9 @@
 import 'jest';
 
-import { assert, assertArbitrary, notALiteral, notOfType, numeric, primitive } from './utils';
+import { assert, assertArbitrary, notALiteral, notOfType, numeric, primitive } from '../utils';
 
 // @ts-ignore
-import { isA, typeCheckFor } from 'ts-type-checked';
+import { isA, typeCheckFor } from 'ts-reflection';
 import fc from 'fast-check';
 
 describe('basics', () => {
@@ -109,6 +109,24 @@ describe('basics', () => {
 
     const validArbitrary: fc.Arbitrary<TypeReference1> = fc.bigInt();
     const invalidArbitrary = fc.anything().filter(notOfType('bigint'));
+
+    assert(validArbitrary, invalidArbitrary, [typeCheckFor<TypeReference1>(), (value) => isA<TypeReference1>(value)]);
+  });
+
+  test('symbol', () => {
+    type TypeReference1 = symbol;
+
+    const validArbitrary: fc.Arbitrary<TypeReference1> = fc.string().map(Symbol);
+    const invalidArbitrary = fc.anything().filter(notOfType('symbol'));
+
+    assert(validArbitrary, invalidArbitrary, [typeCheckFor<TypeReference1>(), (value) => isA<TypeReference1>(value)]);
+  });
+
+  test('Symbol', () => {
+    type TypeReference1 = Symbol; // eslint-disable-line @typescript-eslint/ban-types
+
+    const validArbitrary: fc.Arbitrary<TypeReference1> = fc.string().map(Symbol);
+    const invalidArbitrary = fc.anything().filter(notOfType('symbol'));
 
     assert(validArbitrary, invalidArbitrary, [typeCheckFor<TypeReference1>(), (value) => isA<TypeReference1>(value)]);
   });

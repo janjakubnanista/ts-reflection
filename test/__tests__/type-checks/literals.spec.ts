@@ -1,9 +1,9 @@
 import 'jest';
 
-import { assert, notALiteral, notAnEmptyArray, notOfType, primitive } from './utils';
+import { assert, notALiteral, notAnEmptyArray, notOfType, primitive } from '../utils';
 
 // @ts-ignore
-import { isA, typeCheckFor } from 'ts-type-checked';
+import { isA, typeCheckFor } from 'ts-reflection';
 import fc from 'fast-check';
 
 describe('literals', () => {
