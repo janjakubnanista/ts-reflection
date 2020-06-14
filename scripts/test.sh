@@ -63,8 +63,11 @@ echo "Running tests for version $VERSION"
 # Move to the test project
 cd "$TEST_PATH"
 
+# Remove ts-reflection dependency to make sure we don't get a stale version
+rm -rf node_modules/ts-reflection
+
 # Install the test project dependencies
-yarn
+yarn --check-files
 
 # And move back to root
 cd ..
