@@ -1,4 +1,5 @@
-import { LogLevel, createLogger } from './logger';
+import { TransformerOptions, defaultTransformerOptions } from './options';
+import { createLogger } from './logger';
 import { createTypeChecker } from './checker/checker';
 import { createTypeDescriber } from './descriptor/createTypeDescriber';
 import { createValueCheckFunction } from './checker/utils';
@@ -6,14 +7,6 @@ import { isOurCallExpression, isOurImportExpression } from './visitor/assertions
 import { publicProperties } from './utils';
 import { visitNodeAndChildren } from './visitor/visitNodeAndChildren';
 import ts from 'typescript';
-
-export interface TransformerOptions {
-  logLevel: LogLevel;
-}
-
-const defaultTransformerOptions: TransformerOptions = {
-  logLevel: 'normal',
-};
 
 /**
  * The main transformer function.
