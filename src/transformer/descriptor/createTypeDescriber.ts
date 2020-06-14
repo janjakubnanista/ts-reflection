@@ -16,12 +16,17 @@ export const createTypeDescriber = (
   function describeType(scope: ts.TypeNode, type: ts.Type): TypeName {
     const rawTypeName = typeChecker.typeToString(type);
 
+    // Check whether we already have a type check for this type
+    const resolvedTypeName = resolvedTypeNames.get(type);
+    if (resolvedTypeName) {
+      logger.debug('\tType already resolved: ', rawTypeName);
+
+      return resolvedTypeName;
+    }
+
     logger.info('Describing', rawTypeName);
     logger.debug('\tType flags: ', typeFlags(type).join(', '));
     logger.debug('\tObject flags: ', objectFlags(type).join(', '));
-
-    const resolvedTypeName = resolvedTypeNames.get(type);
-    if (resolvedTypeName) return resolvedTypeName;
 
     const uniqueTypeName = getUniqueTypeName(rawTypeName, Array.from(resolvedTypeNames.values()));
 
