@@ -1,7 +1,7 @@
-import { InterfaceTypeDescriptor, TypeName } from '../types';
+import { ObjectTypeDescriptor, TypeName } from '../types';
 import {
+  createIsNotNullOrUndefined,
   createIsNotPrimitive,
-  createIsOfType,
   createLogicalAndChain,
   createLogicalOrChain,
   createValueCheckFunction,
@@ -10,12 +10,6 @@ import ts from 'typescript';
 
 export type CreateObjectPropertyCheck = (typeName: TypeName, value: ts.Expression) => ts.Expression;
 
-const createIsNotNullOrUndefined = (value: ts.Expression): ts.Expression =>
-  createLogicalAndChain(
-    ts.createStrictInequality(value, ts.createIdentifier('undefined')),
-    ts.createStrictInequality(value, ts.createNull()),
-  );
-
 // interface      -> everything except for null & undefined
 // - Object       -> everything except for null & undefined
 // object         -> everything but number, string, boolean, symbol, null, or undefined
@@ -23,7 +17,7 @@ const createIsNotNullOrUndefined = (value: ts.Expression): ts.Expression =>
 // - Record       -> everything but number, string, boolean, symbol, null, or undefined
 export const createObjectTypeCheck = (
   value: ts.Expression,
-  { callable, properties, numberIndexType, stringIndexType }: InterfaceTypeDescriptor,
+  { properties, numberIndexType, stringIndexType }: ObjectTypeDescriptor,
   createObjectPropertyCheck: CreateObjectPropertyCheck,
 ): ts.Expression => {
   const propertyChecks = properties.map((property) =>
@@ -31,11 +25,8 @@ export const createObjectTypeCheck = (
   );
 
   const objectKeys = ts.createCall(ts.createPropertyAccess(ts.createIdentifier('Object'), 'keys'), [], [value]);
-  const basicTypeCheck = callable
-    ? createIsOfType(value, ts.createLiteral('function'))
-    : stringIndexType || numberIndexType
-    ? createIsNotPrimitive(value)
-    : createIsNotNullOrUndefined(value);
+  const basicTypeCheck =
+    stringIndexType || numberIndexType ? createIsNotPrimitive(value) : createIsNotNullOrUndefined(value);
 
   const indexPropertyChecks =
     stringIndexType || numberIndexType

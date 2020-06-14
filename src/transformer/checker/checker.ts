@@ -16,7 +16,6 @@ export const createTypeChecker = (
   typeCheckMapIdentifier: ts.Identifier,
   typeDescriptorMap: TypeDescriptorMap,
 ): [TypeCheckCreator, TypeCheckMapCreator] => {
-  // const typeCheckMapIdentfifier: ts.Identifier = ts.createIdentifier('__isA');
   const typeCheckFunctionMap: Map<TypeName, ts.Expression> = new Map();
 
   const createTypeCheckMapStatement: TypeCheckMapCreator = () => {
@@ -111,10 +110,25 @@ export const createTypeChecker = (
 
       case 'promise':
         const promiseTypeCheckMethod = createTypeCheckFunction('Promise', (value) =>
-          createObjectTypeCheck(value, { _type: 'interface', properties: typeDescriptor.properties }, createTypeCheck),
+          createObjectTypeCheck(value, { properties: typeDescriptor.properties }, createTypeCheck),
         );
 
         return ts.createCall(promiseTypeCheckMethod, undefined, [value]);
+
+      case 'function':
+        const functionTypeCheck = ts.createStrictEquality(ts.createTypeOf(value), ts.createStringLiteral('function'));
+
+        // If this is just a simple function with no additional properties then return the typeof check immediatelly
+        if (!typeDescriptor.properties.length && !typeDescriptor.stringIndexType && !typeDescriptor.numberIndexType) {
+          return functionTypeCheck;
+        }
+
+        // If though the function has additional properties and/or index we need to check that
+        const functionTypeCheckMethod = createTypeCheckFunction(typeName, (value) =>
+          createLogicalAndChain(functionTypeCheck, createObjectTypeCheck(value, typeDescriptor, createTypeCheck)),
+        );
+
+        return ts.createCall(functionTypeCheckMethod, undefined, [value]);
 
       case 'interface':
         const objectTypeCheckMethod = createTypeCheckFunction(typeName, (value) =>

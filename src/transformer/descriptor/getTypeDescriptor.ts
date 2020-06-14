@@ -31,6 +31,17 @@ import ts from 'typescript';
 
 export type ResolveTypeDescriptor<T = TypeDescriptor> = (resolve: TypeNameResolver) => T;
 
+/**
+ * Describes the type passed in using one of available TypeDescriptor types.
+ *
+ * In order to be able to resolve generic types it is necessary to pass the scope TypeNode.
+ * It represents the original TypeNode passed to either isA<T> or typeCheckFor<T>.
+ *
+ * @param logger {Logger} An instance of Logger to use
+ * @param program {ts.Program} A TypeScript Program instance
+ * @param type {ts.Type} The type being described
+ * @param scope {ts.TypeNode} Root TypeNode under which this type was found
+ */
 export const getTypeDescriptor = (
   logger: Logger,
   program: ts.Program,
@@ -110,13 +121,16 @@ export const getTypeDescriptor = (
   const typeName = typeChecker.typeToString(type, scope);
 
   // Promise
+  //
+  // Checking promises is not precise - it is not possible to type-check
+  // the resolution value. A warning is printed notifying the consumer about this.
   if (isPromise(type, libraryDescriptorName)) {
     logger.debug('Promise');
     logger.warn(promiseTypeWarning(typeName));
 
     return (resolve) => ({
       _type: 'promise',
-      properties: getPropertyTypeDescriptors(typeChecker, scope, type, resolve),
+      properties: getPropertyTypeDescriptors(typeChecker, scope, type.getProperties(), resolve),
     });
   }
 
@@ -180,7 +194,28 @@ export const getTypeDescriptor = (
     logger.debug('Function');
     logger.info(functionTypeWarning(typeName));
 
-    return { _type: 'keyword', value: 'function' };
+    return (resolve) => {
+      const numberIndexType = type.getNumberIndexType();
+      const stringIndexType = type.getStringIndexType();
+
+      // If the type refers to Function library type we need to skip property checks
+      // since properties of Function include e.g. apply, call or bind which are all of type Function.
+      // Leaving them in would create an infinite loop.
+      //
+      // This though is not unsafe since checking whether typeof value === 'function'
+      // is enough to be certain that these properties exist.
+      //
+      // If the type refers to e.g. a function literal we use type.getProperties()
+      // which will only return the explicitly defined properties (skipping apply, call, bind etc)
+      const properties: ts.Symbol[] = libraryDescriptorName === 'Function' ? [] : type.getProperties();
+
+      return {
+        _type: 'function',
+        properties: getPropertyTypeDescriptors(typeChecker, scope, properties, resolve),
+        numberIndexType: numberIndexType ? resolve(scope, numberIndexType) : undefined,
+        stringIndexType: stringIndexType ? resolve(scope, stringIndexType) : undefined,
+      };
+    };
   }
 
   // Array
@@ -223,6 +258,7 @@ export const getTypeDescriptor = (
     return (resolve) => ({ _type: 'set', type: resolve(scope, setType) });
   }
 
+  // DOM Element / Node
   const domElementClassName = getDOMElementClassName(program, type);
   if (domElementClassName) {
     logger.debug('DOM');
@@ -234,22 +270,18 @@ export const getTypeDescriptor = (
   if (isInterface(type, libraryDescriptorName)) {
     logger.debug('Interface');
 
-    const callable = type.getCallSignatures()?.length !== 0;
-    if (callable) logger.info(functionTypeWarning(typeName));
-
     return (resolve) => {
       const numberIndexType = type.getNumberIndexType();
       const stringIndexType = type.getStringIndexType();
 
       return {
         _type: 'interface',
-        callable,
-        properties: getPropertyTypeDescriptors(typeChecker, scope, type, resolve),
+        properties: getPropertyTypeDescriptors(typeChecker, scope, type.getApparentProperties(), resolve),
         numberIndexType: numberIndexType ? resolve(scope, numberIndexType) : undefined,
         stringIndexType: stringIndexType ? resolve(scope, stringIndexType) : undefined,
       };
     };
   }
 
-  throw new Error('oh noooooo no type descriptor for ' + typeChecker.typeToString(type));
+  throw new Error('Unable to describe type ' + typeName);
 };

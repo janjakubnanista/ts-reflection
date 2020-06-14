@@ -1,14 +1,14 @@
 import { PropertyTypeDescriptor, TypeNameResolver } from '../types';
-import { getPropertyAccessor } from './getPropertyAccessor';
+import { getPropertyAccessor, isPublicProperty } from '../utils';
 import ts from 'typescript';
 
 export const getPropertyTypeDescriptors = (
   typeChecker: ts.TypeChecker,
   scope: ts.TypeNode,
-  type: ts.Type,
+  properties: ts.Symbol[],
   resolve: TypeNameResolver,
 ): PropertyTypeDescriptor[] => {
-  return type.getProperties().map((property) => {
+  return properties.filter(isPublicProperty).map((property) => {
     const propertyType = typeChecker.getTypeOfSymbolAtLocation(property, scope);
     const accessor: ts.Expression = getPropertyAccessor(property);
 

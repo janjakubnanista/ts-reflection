@@ -35,6 +35,12 @@ export const createIsNotPrimitive = (value: ts.Expression): ts.Expression => {
   );
 };
 
+export const createIsNotNullOrUndefined = (value: ts.Expression): ts.Expression =>
+  createLogicalAndChain(
+    ts.createStrictInequality(value, ts.createIdentifier('undefined')),
+    ts.createStrictInequality(value, ts.createNull()),
+  );
+
 export const createValueCheckFunction = (
   comparison: (valueNode: ts.Identifier) => ts.ConciseBody,
   parameterName = 'value',

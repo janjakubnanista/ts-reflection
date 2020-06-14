@@ -64,7 +64,8 @@ export const isFunction = (
   typeNode?.kind === ts.SyntaxKind.FunctionType ||
   typeNode?.kind === ts.SyntaxKind.ConstructorType ||
   libraryDescriptorName === 'Function' ||
-  !!type.getConstructSignatures()?.length;
+  !!type.getConstructSignatures()?.length ||
+  !!type.getCallSignatures()?.length;
 
 export const isArray = (
   typeChecker: ts.TypeChecker,

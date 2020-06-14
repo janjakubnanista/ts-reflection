@@ -3,15 +3,21 @@ import ts from 'typescript';
 // All the primitive types as specified in https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-2.html#object-type
 export interface KeywordTypeDescriptor {
   _type: 'keyword';
-  value: 'string' | 'number' | 'boolean' | 'bigint' | 'object' | 'symbol' | 'null' | 'undefined' | 'function';
+  value: 'string' | 'number' | 'boolean' | 'bigint' | 'object' | 'symbol' | 'null' | 'undefined';
 }
 
-export interface InterfaceTypeDescriptor {
-  _type: 'interface';
-  callable?: boolean;
+export interface ObjectTypeDescriptor {
   properties: PropertyTypeDescriptor[];
   numberIndexType?: TypeName;
   stringIndexType?: TypeName;
+}
+
+export interface FunctionTypeDescriptor extends ObjectTypeDescriptor {
+  _type: 'function';
+}
+
+export interface InterfaceTypeDescriptor extends ObjectTypeDescriptor {
+  _type: 'interface';
 }
 
 export interface LiteralTypeDescriptor {
@@ -77,6 +83,7 @@ export interface NeverTypeDescriptor {
 export type TypeDescriptor =
   | KeywordTypeDescriptor
   | LiteralTypeDescriptor
+  | FunctionTypeDescriptor
   | InterfaceTypeDescriptor
   | ArrayTypeDescriptor
   | TupleTypeDescriptor
