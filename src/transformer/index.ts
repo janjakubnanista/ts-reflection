@@ -3,8 +3,8 @@ import { createLogger } from './logger';
 import { createTypeChecker } from './checker/checker';
 import { createTypeDescriber } from './descriptor/createTypeDescriber';
 import { createValueCheckFunction } from './checker/utils';
+import { getPossibleValues, getPublicProperties } from './utils';
 import { isOurCallExpression, isOurImportExpression } from './visitor/assertions';
-import { publicProperties } from './utils';
 import { visitNodeAndChildren } from './visitor/visitNodeAndChildren';
 import ts from 'typescript';
 
@@ -46,6 +46,7 @@ export default (
 
     // First transform the file
     const transformedFile = visitNodeAndChildren(file, program, context, (node: ts.Node) => {
+      // All the imports from ts-reflection are fake so we need to remove them all
       if (isOurImportExpression(node)) return undefined;
 
       if (isOurCallExpression(node, 'isA', typeChecker)) {
@@ -77,8 +78,16 @@ export default (
           throw new Error('propertiesOf<T>() requires one type parameter, none specified');
         }
 
-        const type = typeChecker.getTypeFromTypeNode(typeNode);
-        return publicProperties(type);
+        return ts.createArrayLiteral(getPublicProperties(typeChecker, typeNode));
+      }
+
+      if (isOurCallExpression(node, 'valuesOf', typeChecker)) {
+        const typeNode = node.typeArguments?.[0];
+        if (!typeNode) {
+          throw new Error('valuesOf<T>() requires one type parameter, none specified');
+        }
+
+        return ts.createArrayLiteral(getPossibleValues(typeChecker, typeNode));
       }
 
       return node;

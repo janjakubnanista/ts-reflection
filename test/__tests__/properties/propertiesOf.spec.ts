@@ -6,7 +6,7 @@ import { propertiesOf } from 'ts-reflection';
 const expectPropertiesMatch = (received: unknown[], expected: unknown[]) => {
   expect(received).toHaveLength(expected.length);
   expect(new Set(received)).toEqual(new Set(expected));
-}
+};
 
 describe('propertiesOf', () => {
   describe('explicit properties', () => {
@@ -38,14 +38,14 @@ describe('propertiesOf', () => {
   describe('class properties', () => {
     class ClassWithPublicProperties {
       public age: number;
-      public bio: string = '';
+      public bio = '';
 
       constructor(public name: string, age: number) {
         this.age = age;
       }
 
-      publicMethod(): void {}
-      publicMethodWithInitializer = (): void => {}
+      publicMethod(): void {} // eslint-disable-line @typescript-eslint/no-empty-function
+      publicMethodWithInitializer = (): void => {}; // eslint-disable-line @typescript-eslint/no-empty-function
 
       get propertyWithGetter() {
         return null;
@@ -54,14 +54,14 @@ describe('propertiesOf', () => {
 
     class ClassWithProtectedProperties {
       protected age: number;
-      protected bio: string = '';
+      protected bio = '';
 
       constructor(protected name: string, age: number) {
         this.age = age;
       }
 
-      protected protectedMethod(): void {}
-      protected protectedMethodWithInitializer = (): void => {}
+      protected protectedMethod(): void {} // eslint-disable-line @typescript-eslint/no-empty-function
+      protected protectedMethodWithInitializer = (): void => {}; // eslint-disable-line @typescript-eslint/no-empty-function
 
       protected get propertyWithGetter() {
         return null;
@@ -75,8 +75,8 @@ describe('propertiesOf', () => {
         this.age = age;
       }
 
-      private privateMethod(): void {}
-      private privateMethodWithInitializer = (): void => {}
+      private privateMethod(): void {} // eslint-disable-line @typescript-eslint/no-empty-function
+      private privateMethodWithInitializer = (): void => {}; // eslint-disable-line @typescript-eslint/no-empty-function
 
       private get propertyWithGetter() {
         return null;
@@ -86,7 +86,14 @@ describe('propertiesOf', () => {
     it('should return all public class properties', () => {
       type TypeReference1 = ClassWithPublicProperties;
 
-      const expectedProperties: string[] = ['age', 'bio', 'name', 'publicMethod', 'publicMethodWithInitializer', 'propertyWithGetter'];
+      const expectedProperties: string[] = [
+        'age',
+        'bio',
+        'name',
+        'publicMethod',
+        'publicMethodWithInitializer',
+        'propertyWithGetter',
+      ];
       expectPropertiesMatch(propertiesOf<TypeReference1>(), expectedProperties);
       expectPropertiesMatch(propertiesOf<ClassWithPublicProperties>(), expectedProperties);
     });
@@ -142,10 +149,10 @@ describe('propertiesOf', () => {
     it('should return an array with literal indexed properties', () => {
       type TypeReference1 = {
         [key in LiteralPropertyNames]: string;
-      }
+      };
       type TypeReference2 = Record<LiteralPropertyNames, number>;
 
-      const expectedProperties: string[] = ['name', 'age', 'bio', '6'];
+      const expectedProperties: LiteralPropertyNames[] = ['name', 'age', 'bio', 6];
       expectPropertiesMatch(propertiesOf<TypeReference1>(), expectedProperties);
       expectPropertiesMatch(propertiesOf<TypeReference2>(), expectedProperties);
     });
@@ -154,7 +161,7 @@ describe('propertiesOf', () => {
       type MixedPropertyTypes = LiteralPropertyNames | number;
       type TypeReference1 = {
         [key in MixedPropertyTypes]: string;
-      }
+      };
       type TypeReference2 = Record<MixedPropertyTypes, number>;
 
       const expectedProperties: string[] = ['name', 'age', 'bio'];
@@ -166,10 +173,10 @@ describe('propertiesOf', () => {
       type MixedPropertyTypes = LiteralPropertyNames | string;
       type TypeReference1 = {
         [key in MixedPropertyTypes]: string;
-      }
+      };
       type TypeReference2 = Record<MixedPropertyTypes, number>;
 
-      const expectedProperties: string[] = ['6'];
+      const expectedProperties: MixedPropertyTypes[] = [6];
       expectPropertiesMatch(propertiesOf<TypeReference1>(), expectedProperties);
       expectPropertiesMatch(propertiesOf<TypeReference2>(), expectedProperties);
     });
@@ -178,10 +185,10 @@ describe('propertiesOf', () => {
       type MixedPropertyTypes = LiteralPropertyNames | string;
       type TypeReference1 = {
         [key in MixedPropertyTypes]: string;
-      }
+      };
       type TypeReference2 = Record<MixedPropertyTypes, number>;
 
-      const expectedProperties: string[] = ['6'];
+      const expectedProperties: MixedPropertyTypes[] = [6];
       expectPropertiesMatch(propertiesOf<TypeReference1>(), expectedProperties);
       expectPropertiesMatch(propertiesOf<TypeReference2>(), expectedProperties);
     });
@@ -190,7 +197,7 @@ describe('propertiesOf', () => {
       type MixedPropertyTypes = LiteralPropertyNames | string | number;
       type TypeReference1 = {
         [key in MixedPropertyTypes]: string;
-      }
+      };
       type TypeReference2 = Record<MixedPropertyTypes, number>;
 
       const expectedProperties: string[] = [];
@@ -219,6 +226,60 @@ describe('propertiesOf', () => {
 
       const expectedProperties: symbol[] = [Symbol.toStringTag];
       expectPropertiesMatch(propertiesOf<TypeReference1>(), expectedProperties);
+    });
+
+    it('should work with different number literal notations', () => {
+      type NumericPropertyType = 1e7 | 1e-6 | 0x111111 | 17.254 | 0.5;
+      type TypeReference1 = {
+        [key in NumericPropertyType]: string;
+      };
+      type TypeReference2 = Record<NumericPropertyType, number>;
+
+      const expectedProperties: number[] = [1e7, 1e-6, 0x111111, 17.254, 0.5];
+      expectPropertiesMatch(propertiesOf<TypeReference1>(), expectedProperties);
+      expectPropertiesMatch(propertiesOf<TypeReference2>(), expectedProperties);
+    });
+  });
+
+  describe('enums', () => {
+    it('should list all the keys of regular enums', () => {
+      enum Enum {
+        A,
+        'B',
+      }
+
+      const expectedProperties: unknown[] = ['A', 'B'];
+      expectPropertiesMatch(propertiesOf<Enum>(), expectedProperties);
+    });
+
+    it('should list all the keys of regular enums with values', () => {
+      enum Enum {
+        A = 1,
+        'B' = 'string',
+      }
+
+      const expectedProperties: unknown[] = ['A', 'B'];
+      expectPropertiesMatch(propertiesOf<Enum>(), expectedProperties);
+    });
+
+    it('should list all the keys of const enums', () => {
+      const enum Enum {
+        A,
+        'B',
+      }
+
+      const expectedProperties: unknown[] = ['A', 'B'];
+      expectPropertiesMatch(propertiesOf<Enum>(), expectedProperties);
+    });
+
+    it('should list all the keys of const enums with values', () => {
+      const enum Enum {
+        A = 1,
+        'B' = 'string',
+      }
+
+      const expectedProperties: unknown[] = ['A', 'B'];
+      expectPropertiesMatch(propertiesOf<Enum>(), expectedProperties);
     });
   });
 });

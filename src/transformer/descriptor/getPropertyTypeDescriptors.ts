@@ -10,7 +10,7 @@ export const getPropertyTypeDescriptors = (
 ): PropertyTypeDescriptor[] => {
   return properties.filter(isPublicProperty).map((property) => {
     const propertyType = typeChecker.getTypeOfSymbolAtLocation(property, scope);
-    const accessor: ts.Expression = getPropertyAccessor(property);
+    const accessor: ts.Expression = getPropertyAccessor(property, typeChecker, scope);
 
     return {
       _type: 'property',

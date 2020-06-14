@@ -88,10 +88,37 @@ export type NameOfPropertyOfType<T, C = unknown> = NonNullable<
  */
 export declare function propertiesOf<T>(): NameOfPropertyOfType<T>[];
 
+/**
+ * Returns an array of possible literal values of (a union) type T.
+ *
+ * Types that have unlimited amount of values will not be present in the array, for example:
+ *
+ * @example
+ * ```
+ * type Union = 6 | "message" | boolean | number | string | symbol;
+ *
+ * // unionValues will only contain [6, "message", true, false]
+ * // since number, string and symbol can have infinite amount of possible values
+ * const unionValues = valuesOf<Union>();
+ * ```
+ *
+ * @example
+ * ```
+ * type ButtonType = "primary" | "secondary" | "error" | "link";
+ *
+ * // allButtonTypes will be an array of all the ButtonType values, i.e. ["primary" | "secondary" | "error" | "link"]
+ * const allButtonTypes = valuesOf<ButtonType>();
+ * ```
+ *
+ * @function
+ * @template T
+ * @return {T[]} Array of possible literal values of type T
+ */
+export declare function valuesOf<T extends string | number | boolean | bigint>(): T[];
 
 // If someone forgets to register ts-reflection/transformer then tsc
 // is going to actually import this file which will throw this error
 // for easier problem solving
 throw new Error(
-  'It looks like you have forgotten to register the transform for ts-type-checked!\n\nPlease look at the installation guide to see how to do that for your project:\n\nhttps://www.npmjs.com/package/ts-type-checked#installation',
+  'It looks like you have forgotten to register the transform for ts-reflection!\n\nPlease look at the installation guide to see how to do that for your project:\n\nhttps://www.npmjs.com/package/ts-reflection#installation',
 );

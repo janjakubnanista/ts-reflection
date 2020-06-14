@@ -33,7 +33,8 @@ export const isPromise = (type: ts.Type, libraryDescriptorName?: LibraryTypeDesc
 export const isInterface = (type: ts.Type, libraryDescriptorName?: LibraryTypeDescriptorName): boolean =>
   !!(type.flags & ts.TypeFlags.Object) || libraryDescriptorName === 'Object';
 
-export const isLiteral = (type: ts.Type): boolean => type.isLiteral() || !!(type.flags & ts.TypeFlags.BigIntLiteral);
+export const isLiteral = (type: ts.Type): type is ts.LiteralType =>
+  type.isLiteral() || !!(type.flags & ts.TypeFlags.BigIntLiteral);
 
 export const isNull = (type: ts.Type): boolean => !!(type.flags & ts.TypeFlags.Null);
 
