@@ -24,7 +24,7 @@ module.exports = {
 
         // And the same goes for member accessibility
         //
-        // See https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/explicit-member-accessibility.md
+        // See https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/explicit-member-accessibility.md
         '@typescript-eslint/explicit-member-accessibility': 0,
 
         // And last but not least require() calls are enabled in js files

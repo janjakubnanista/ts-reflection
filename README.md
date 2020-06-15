@@ -1,6 +1,6 @@
 <!-- Logo -->
 <p align="center">
-  <img width="50%" src="https://raw.githubusercontent.com/janjakubnanista/ts-reflection/master/res/ts-reflection.png"/>
+  <img width="50%" src="https://raw.githubusercontent.com/janjakubnanista/ts-reflection/main/res/ts-reflection.png"/>
 </p>
 
 <h1 align="center">
@@ -14,17 +14,17 @@
 <!-- The badges section -->
 <p align="center">
   <!-- Travis CI build status -->
-  <a href="https://travis-ci.org/janjakubnanista/ts-reflection"><img alt="Build Status" src="https://travis-ci.org/janjakubnanista/ts-reflection.svg?branch=master"/></a>
+  <a href="https://travis-ci.org/janjakubnanista/ts-reflection"><img alt="Build Status" src="https://travis-ci.org/janjakubnanista/ts-reflection.svg?branch=main"/></a>
   <!-- CircleCI build status -->
-  <a href="https://circleci.com/gh/janjakubnanista/ts-reflection/tree/master"><img alt="CircleCI Build Status" src="https://circleci.com/gh/janjakubnanista/ts-reflection.svg?style=shield"></a>
+  <a href="https://circleci.com/gh/janjakubnanista/ts-reflection/tree/main"><img alt="CircleCI Build Status" src="https://circleci.com/gh/janjakubnanista/ts-reflection.svg?style=shield"></a>
   <!-- Fury.io NPM published package version -->
   <a href="https://www.npmjs.com/package/ts-reflection"><img alt="NPM Version" src="https://badge.fury.io/js/ts-reflection.svg"/></a>
   <!-- Shields.io dev dependencies status -->
-  <a href="https://github.com/janjakubnanista/ts-reflection/blob/master/package.json"><img alt="Dev Dependency Status" src="https://img.shields.io/david/dev/janjakubnanista/ts-reflection"/></a>
+  <a href="https://github.com/janjakubnanista/ts-reflection/blob/main/package.json"><img alt="Dev Dependency Status" src="https://img.shields.io/david/dev/janjakubnanista/ts-reflection"/></a>
   <!-- Snyk.io vulnerabilities badge -->
   <a href="https://snyk.io/test/github/janjakubnanista/ts-reflection"><img alt="Known Vulnerabilities" src="https://snyk.io/test/github/janjakubnanista/ts-reflection/badge.svg"/></a>
   <!-- Shields.io license badge -->
-  <a href="https://github.com/janjakubnanista/ts-reflection/blob/master/LICENSE"><img alt="License" src="https://img.shields.io/npm/l/ts-reflection"/></a>
+  <a href="https://github.com/janjakubnanista/ts-reflection/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/npm/l/ts-reflection"/></a>
 </p>
 
 `ts-reflection` generates [type guards](https://www.typescriptlang.org/docs/handbook/advanced-types.html#type-guards-and-differentiating-types) based on your own (or library) TypeScript types. It is compatible with [rollup](./docs/INSTALLATION.md#installation--rollup), [webpack](./docs/INSTALLATION.md#installation--webpack), and [ttypescript](./docs/INSTALLATION.md#installation--ttypescript) projects and works nicely with [jest](./docs/INSTALLATION.md#installation--jest) or [ts-node](./docs/INSTALLATION.md#installation--ts-node).
@@ -32,11 +32,11 @@
 <p align="center">
   <a href="#example-cases">Example cases</a>
   <span>|</span>
-  <a href="https://github.com/janjakubnanista/ts-reflection/blob/master/docs/INSTALLATION.md">Installation</a>
+  <a href="https://github.com/janjakubnanista/ts-reflection/blob/main/docs/INSTALLATION.md">Installation</a>
   <span>|</span>
-  <a href="https://github.com/janjakubnanista/ts-reflection/blob/master/docs/API.md">API</a>
+  <a href="https://github.com/janjakubnanista/ts-reflection/blob/main/docs/API.md">API</a>
   <span>|</span>
-  <a href="https://github.com/janjakubnanista/ts-reflection/blob/master/docs/SUPPORTED_TYPES.md">Supported types</a>
+  <a href="https://github.com/janjakubnanista/ts-reflection/blob/main/docs/SUPPORTED_TYPES.md">Supported types</a>
 </p>
 
 ## Wait what?

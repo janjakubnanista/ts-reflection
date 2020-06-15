@@ -1,5 +1,5 @@
 <h1>
-  <img height="56px" width="auto" src="https://raw.githubusercontent.com/janjakubnanista/ts-reflection/master/res/ts-reflection.png" align="center"/>
+  <img height="56px" width="auto" src="https://raw.githubusercontent.com/janjakubnanista/ts-reflection/main/res/ts-reflection.png" align="center"/>
   <span>ts-reflection</span>
 </h1>
 

@@ -1,5 +1,5 @@
 <h1>
-  <img height="56px" width="auto" src="https://raw.githubusercontent.com/janjakubnanista/ts-reflection/master/res/ts-reflection.png" align="center"/>
+  <img height="56px" width="auto" src="https://raw.githubusercontent.com/janjakubnanista/ts-reflection/main/res/ts-reflection.png" align="center"/>
   <span>ts-reflection</span>
 </h1>
 
@@ -7,7 +7,7 @@
 
 # Supported TypeScript versions
 
-`ts-reflection` has an extensive E2E test suite found in the [test](https://github.com/janjakubnanista/ts-reflection/tree/master/test) folder. This suite is being run against several TS versions (the list can be found [here](https://github.com/janjakubnanista/ts-reflection/blob/master/scripts/versions.txt)):
+`ts-reflection` has an extensive E2E test suite found in the [test](https://github.com/janjakubnanista/ts-reflection/tree/main/test) folder. This suite is being run against several TS versions (the list can be found [here](https://github.com/janjakubnanista/ts-reflection/blob/main/scripts/versions.txt)):
 
 - `4.0.0-dev.20200514`
 - `3.9.2`

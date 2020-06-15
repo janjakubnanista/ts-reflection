@@ -1,5 +1,5 @@
 <h1>
-  <img height="56px" width="auto" src="https://raw.githubusercontent.com/janjakubnanista/ts-reflection/master/res/ts-reflection.png" align="center"/>
+  <img height="56px" width="auto" src="https://raw.githubusercontent.com/janjakubnanista/ts-reflection/main/res/ts-reflection.png" align="center"/>
   <span>ts-reflection</span>
 </h1>
 
@@ -7,7 +7,7 @@
 
 # Installation
 
-`ts-reflection` is a TypeScript transformer - it generates the required type checks and injects them into your code at compile time. It is compatible with [rollup](https://github.com/janjakubnanista/ts-reflection/tree/master/examples/rollup), [webpack](https://github.com/janjakubnanista/ts-reflection/tree/master/examples/webpack) and [ttypescript](https://github.com/janjakubnanista/ts-reflection/tree/master/examples/ttypescript) projects and works nicely with [jest](https://github.com/janjakubnanista/ts-reflection/tree/master/examples/jest).
+`ts-reflection` is a TypeScript transformer - it generates the required type checks and injects them into your code at compile time. It is compatible with [rollup](https://github.com/janjakubnanista/ts-reflection/tree/main/examples/rollup), [webpack](https://github.com/janjakubnanista/ts-reflection/tree/main/examples/webpack) and [ttypescript](https://github.com/janjakubnanista/ts-reflection/tree/main/examples/ttypescript) projects and works nicely with [jest](https://github.com/janjakubnanista/ts-reflection/tree/main/examples/jest).
 
 You will first need to install `ts-reflection` using `npm`, `yarn` or similar:
 
@@ -22,7 +22,7 @@ yarn add -D ts-reflection
 <a id="installation--webpack"></a>
 ## Webpack
 
-[See example here](https://github.com/janjakubnanista/ts-reflection/tree/master/examples/webpack)
+[See example here](https://github.com/janjakubnanista/ts-reflection/tree/main/examples/webpack)
 
 In order to enable `ts-reflection` in your Webpack project you need to configure `ts-loader` or `awesome-typescript-loader` in you Webpack config.
 
@@ -53,7 +53,7 @@ const transformer = require('ts-reflection/transformer').default;
 <a id="installation--rollup"></a>
 ## Rollup
 
-[See example here](https://github.com/janjakubnanista/ts-reflection/tree/master/examples/rollup)
+[See example here](https://github.com/janjakubnanista/ts-reflection/tree/main/examples/rollup)
 
 In order to enable `ts-reflection` in your Rollup project you need to configure `ts-loader` or `awesome-typescript-loader` in you rollup config.
 
@@ -99,7 +99,7 @@ typescript({
 <a id="installation--ttypescript"></a>
 ## TTypeScript
 
-[See example here](https://github.com/janjakubnanista/ts-reflection/tree/master/examples/ttypescript)
+[See example here](https://github.com/janjakubnanista/ts-reflection/tree/main/examples/ttypescript)
 
 ### 1. Install `ttypescript`
 
@@ -128,7 +128,7 @@ In order to enable `ts-reflection` in your TTypescript project you need to confi
 <a id="installation--jest"></a>
 ## Jest
 
-[See example here](https://github.com/janjakubnanista/ts-reflection/tree/master/examples/jest)
+[See example here](https://github.com/janjakubnanista/ts-reflection/tree/main/examples/jest)
 
 In order to enable `ts-reflection` in your Jest tests you need to switch to `ttypescript` compiler.
 
@@ -154,7 +154,7 @@ module.exports = {
 <a id="installation--ts-node"></a>
 ## ts-node
 
-[See example here](https://github.com/janjakubnanista/ts-reflection/tree/master/examples/ts-node)
+[See example here](https://github.com/janjakubnanista/ts-reflection/tree/main/examples/ts-node)
 
 ### 1. Configure `ttypescript`
 
