@@ -1,5 +1,5 @@
 <h1>
-  <img height="56px" width="auto" src="https://raw.githubusercontent.com/janjakubnanista/ts-reflection/main/res/ts-reflection.png" align="center"/>
+  <img height="56px" width="auto" src="https://raw.githubusercontent.com/janjakubnanista/ts-reflection/main/res/ts-reflection@xs.jpg" align="center"/>
   <span>ts-reflection</span>
 </h1>
 
@@ -7,7 +7,7 @@
 
 # Installation
 
-`ts-reflection` is a TypeScript transformer - it generates the required type checks and injects them into your code at compile time. It is compatible with [rollup](https://github.com/janjakubnanista/ts-reflection/tree/main/examples/rollup), [webpack](https://github.com/janjakubnanista/ts-reflection/tree/main/examples/webpack) and [ttypescript](https://github.com/janjakubnanista/ts-reflection/tree/main/examples/ttypescript) projects and works nicely with [jest](https://github.com/janjakubnanista/ts-reflection/tree/main/examples/jest).
+`ts-reflection` is a TypeScript transformer - it inspects the types and generates runtime code based on them. It is compatible with [rollup](https://github.com/janjakubnanista/ts-reflection/tree/main/examples/rollup), [webpack](https://github.com/janjakubnanista/ts-reflection/tree/main/examples/webpack) and [ttypescript](https://github.com/janjakubnanista/ts-reflection/tree/main/examples/ttypescript) projects and works nicely with [jest](https://github.com/janjakubnanista/ts-reflection/tree/main/examples/jest).
 
 You will first need to install `ts-reflection` using `npm`, `yarn` or similar:
 
