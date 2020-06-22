@@ -35,6 +35,8 @@
   <a href="https://github.com/janjakubnanista/ts-reflection/blob/main/docs/INSTALLATION.md">Installation</a>
   <span>|</span>
   <a href="https://github.com/janjakubnanista/ts-reflection/blob/main/docs/API.md">API</a>
+  <span>|</span>
+  <a href="#acknowledgement">Acknowledgement</a>
 </p>
 
 ## Wait what?
@@ -72,14 +74,6 @@ const propertiesOfMyEnum = propertiesOf<MyEnum>(); // ['NO', 'MAYBE', 'YES']
 const myPossibleTypes = valuesOf<MyType>(); // ['mine', 'yours', 'their']
 ```
 
-## Installation
-
-You can find comprehensive installation instructions in the [installation document](https://github.com/janjakubnanista/ts-reflection/blob/main/docs/INSTALLATION.md).
-
-## API
-
-You can find comprehensive API documentation in the [API docs](https://github.com/janjakubnanista/ts-reflection/blob/main/docs/API.md).
-
 <a id="motivation"></a>
 ## Motivation
 
@@ -107,6 +101,16 @@ const keysOfMyInterface: KeysOfMyInterface[] = ['property', 'anotherProperty']
 
 After I finished [`ts-reflection`](https://www.npmjs.com/package/ts-reflection), a TypeScript transformer project that generates type guards based on your types, I decided to take the knowledge I gained and create a transformer that would free me from ever having to type anything like the above manually.
 
+
+## Installation
+
+You can find comprehensive installation instructions in the [installation document](https://github.com/janjakubnanista/ts-reflection/blob/main/docs/INSTALLATION.md).
+
+## API
+
+You can find comprehensive API documentation in the [API docs](https://github.com/janjakubnanista/ts-reflection/blob/main/docs/API.md).
+
+<a id="acknowledgement"></a>
 ## Acknowledgement
 
 This idea was inspired by [`ts-transformer-keys`](https://www.npmjs.com/package/ts-transformer-keys) NPM module. The E2E testing infrastructure that ensures compatibility with all minor TypeScript versions is based on my [`ts-reflection`](https://www.npmjs.com/package/ts-reflection) project.
