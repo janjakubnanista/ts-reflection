@@ -30,7 +30,7 @@
 </p>
 
 <p align="center">
-  <a href="#example-cases">Example cases</a>
+  <a href="#motivation">Motivation</a>
   <span>|</span>
   <a href="https://github.com/janjakubnanista/ts-reflection/blob/main/docs/INSTALLATION.md">Installation</a>
   <span>|</span>
@@ -80,6 +80,7 @@ You can find comprehensive installation instructions in the [installation docume
 
 You can find comprehensive API documentation in the [API docs](https://github.com/janjakubnanista/ts-reflection/blob/main/docs/API.md).
 
+<a id="motivation"></a>
 ## Motivation
 
 I can't count the number of times I needed to type all the possible values of a union type to create e.g. a dropdown with all the button types:
