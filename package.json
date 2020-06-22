@@ -1,8 +1,7 @@
 {
   "name": "ts-reflection",
-  "private": true,
-  "version": "0.1.0",
-  "description": "Template for TypeScript transformer projects",
+  "version": "0.3.5",
+  "description": "Type reflection utilities for TypeScript.",
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {

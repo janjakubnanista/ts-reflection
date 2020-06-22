@@ -1,4 +1,4 @@
-import ts from "typescript";
+import ts from 'typescript';
 
 /**
  * TypeScript AST visitor that transforms the tree on a per-node basis.
