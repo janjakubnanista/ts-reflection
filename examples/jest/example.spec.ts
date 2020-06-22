@@ -1,33 +1,21 @@
 import 'jest';
 
 // @ts-ignore
-import { isA, typeCheckFor } from 'ts-reflection';
+import { propertiesOf, valuesOf } from 'ts-reflection';
 
-interface User {
-  name: string;
-  age?: number;
-}
+describe('example jest test suite', () => {
+  interface MyInterface {
+    name: string;
+    description?: string;
+  }
 
-const isAUser = typeCheckFor<User>();
-const getTypeName = (value: unknown): string => {
-  if (isAUser(value)) return 'User';
-  if (isA<string>(value)) return 'String';
-  if (isA<number>(value)) return 'Number';
+  type MyUnion = 'primary' | 'secondary' | 'greg';
 
-  return 'Unknown!!!';
-};
+  it('should list all the properties of an interface', () => {
+    expect(propertiesOf<MyInterface>()).toEqual(['name', 'description']);
+  });
 
-describe('example tests', () => {
-  test('ts-reflection should work with jest', () => {
-    expect(getTypeName('hey')).toBe('String');
-    expect(getTypeName('')).toBe('String');
-
-    expect(getTypeName(6)).toBe('Number');
-    expect(getTypeName(NaN)).toBe('Number');
-
-    expect(getTypeName({ name: 'John' })).toBe('User');
-    expect(getTypeName({ name: 'John', age: 7 })).toBe('User');
-
-    expect(getTypeName({ name: 'John', age: 'Not-a-number' })).toBe('Unknown!!!');
+  it('should list all the possible values of an union type', () => {
+    expect(valuesOf<MyUnion>()).toEqual(['primary', 'secondary', 'greg']);
   });
 });

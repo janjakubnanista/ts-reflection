@@ -149,9 +149,13 @@ workflows:
           requires:
               - build
 
-      - publish:
+      - approve:
           <<: *only-release
           type: approval
           requires:
               - e2e-test
-              - build
+
+      - publish:
+          <<: *only-release
+          requires:
+              - approve

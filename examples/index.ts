@@ -1,29 +1,19 @@
 // @ts-ignore
-import { typeCheckFor } from 'ts-reflection';
+import { propertiesOf, valuesOf } from 'ts-reflection';
 
-interface User {
+interface MyInterface {
   name: string;
-  age: number;
-  hobbies?: string[];
+  description: string;
+  hobbies: string[];
 }
 
-const isAString = typeCheckFor<string>();
-const isANumber = typeCheckFor<number>();
-const isAUser = typeCheckFor<User>();
+type MyUnion = 'primary' | 'secondary' | 'greg';
 
-[
-  1,
-  true,
-  undefined,
-  null,
-  'Hello World!',
-  { name: 'Joe', age: 8 },
-  { name: 'John', age: 'None' },
-  { name: 'Dough', age: 6, hobbies: 'none' },
-  { name: 'Jan', age: 30, hobbies: ['gardening', 'coding'] },
-].forEach((value) => {
-  console.log(JSON.stringify(value)); // eslint-disable-line no-console
-  console.log('\tIs a string:\t%s', isAString(value)); // eslint-disable-line no-console
-  console.log('\tIs a number:\t%s', isANumber(value)); // eslint-disable-line no-console
-  console.log('\tIs a User:\t%s', isAUser(value)); // eslint-disable-line no-console
-});
+const propertiesOfMyInterface = propertiesOf<MyInterface>();
+const valuesOfMyUnion = valuesOf<MyUnion>();
+
+console.log('Properties of MyInterface: ');
+propertiesOfMyInterface.forEach((property) => console.log('\t- ', property));
+
+console.log('Values of MyUnion: ');
+valuesOfMyUnion.forEach((value) => console.log('\t- ', value));
