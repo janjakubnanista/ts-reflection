@@ -1,5 +1,5 @@
 {
-  "name": "@ts-type-checked-examples/root",
+  "name": "@[PROJECT NAME]-examples/root",
   "private": true,
   "scripts": {
     "build": "yarn workspaces run build",
@@ -7,7 +7,7 @@
     "start": "yarn workspaces run start"
   },
   "dependencies": {
-    "ts-type-checked": "file:../dist"
+    "[PROJECT NAME]": "file:../dist"
   },
   "workspaces": ["jest", "rollup", "ttypescript", "webpack"]
 }

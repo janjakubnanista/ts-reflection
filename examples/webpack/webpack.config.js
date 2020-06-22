@@ -1,4 +1,4 @@
-const transformer = require('ts-type-checked/transformer').default;
+const transformer = require('[PROJECT NAME]/transformer').default;
 
 module.exports = {
   mode: 'development',

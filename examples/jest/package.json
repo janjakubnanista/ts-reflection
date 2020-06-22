@@ -1,5 +1,5 @@
 {
-  "name": "@ts-type-checked-examples/jest",
+  "name": "@[PROJECT NAME]-examples/jest",
   "version": "0.0.1",
   "private": true,
   "scripts": {

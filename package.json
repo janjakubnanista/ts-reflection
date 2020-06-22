@@ -1,13 +1,14 @@
 {
-  "name": "ts-type-checked",
-  "version": "0.4.0",
-  "description": "Type checking utilities for TypeScript.",
+  "name": "ts-transformer-project-template",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Template for TypeScript transformer projects",
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
     "build:source": "tsc",
     "build": "yarn build:source && yarn copy:meta && yarn lint:build",
-    "clean": "rm -rf dist && rm -rf sandbox && rm -rf test/node_modules/ts-type-checked && rm -rf examples/node_modules/ts-type-checked",
+    "clean": "rm -rf dist && rm -rf sandbox && rm -rf test/node_modules/[PROJECT NAME] && rm -rf examples/node_modules/[PROJECT NAME]",
     "copy:meta": "./scripts/copy-metadata.sh",
     "lint:source": "eslint . --fix --ext .ts,.tsx",
     "lint:build": "eslint ./dist --fix --ext .js,.ts",
@@ -18,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/janjakubnanista/ts-type-checked.git"
+    "url": "git+https://github.com/janjakubnanista/ts-transformer-project-template.git"
   },
   "keywords": [
     "TypeScript",
@@ -30,7 +31,7 @@
   "author": "Jan Jakub Nanista <jan.jakub.nanista@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/janjakubnanista/ts-type-checked/issues"
+    "url": "https://github.com/janjakubnanista/ts-transformer-project-template/issues"
   },
   "files": [
     "index.js",
@@ -38,7 +39,7 @@
     "transformer/**/*.js",
     "transformer/**/*.d.ts"
   ],
-  "homepage": "https://github.com/janjakubnanista/ts-type-checked#readme",
+  "homepage": "https://github.com/janjakubnanista/ts-transformer-project-template#readme",
   "devDependencies": {
     "@types/node": "^14.0.13",
     "@typescript-eslint/eslint-plugin": "^3.2.0",
