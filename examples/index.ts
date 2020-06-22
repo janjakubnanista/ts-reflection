@@ -1,4 +1,19 @@
 // @ts-ignore
-import PROJECT from 'ts-reflection';
+import { propertiesOf, valuesOf } from 'ts-reflection';
 
-// Here the source code that the examples import
+interface MyInterface {
+  name: string;
+  description: string;
+  hobbies: string[];
+}
+
+type MyUnion = 'primary' | 'secondary' | 'greg';
+
+const propertiesOfMyInterface = propertiesOf<MyInterface>();
+const valuesOfMyUnion = valuesOf<MyUnion>();
+
+console.log('Properties of MyInterface: ');
+propertiesOfMyInterface.forEach((property) => console.log('\t- ', property));
+
+console.log('Values of MyUnion: ');
+valuesOfMyUnion.forEach((value) => console.log('\t- ', value));
