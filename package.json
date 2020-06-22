@@ -22,10 +22,10 @@
   },
   "keywords": [
     "TypeScript",
-    "type checking",
-    "type checks",
-    "duck typing",
-    "type guards"
+    "type properties",
+    "type keys",
+    "enum values",
+    "enum keys"
   ],
   "author": "Jan Jakub Nanista <jan.jakub.nanista@gmail.com>",
   "license": "MIT",
