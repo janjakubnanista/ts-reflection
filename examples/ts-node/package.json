@@ -1,5 +1,5 @@
 {
-  "name": "@[PROJECT NAME]-examples/ttypescript",
+  "name": "@ts-reflection-examples/ttypescript",
   "private": true,
   "version": "0.0.1",
   "scripts": {

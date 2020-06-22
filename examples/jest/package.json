@@ -1,5 +1,5 @@
 {
-  "name": "@[PROJECT NAME]-examples/jest",
+  "name": "@ts-reflection-examples/jest",
   "version": "0.0.1",
   "private": true,
   "scripts": {

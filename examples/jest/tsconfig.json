@@ -2,7 +2,7 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "plugins": [
-      { "transform": "[PROJECT NAME]/transformer" }
+      { "transform": "ts-reflection/transformer" }
     ]
   }
 }

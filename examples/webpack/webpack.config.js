@@ -1,4 +1,4 @@
-const transformer = require('[PROJECT NAME]/transformer').default;
+const transformer = require('ts-reflection/transformer').default;
 
 module.exports = {
   mode: 'development',

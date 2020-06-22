@@ -1,7 +1,7 @@
 import resolve from 'rollup-plugin-node-resolve';
 import ts from '@wessberg/rollup-plugin-ts';
 // import typescript from 'rollup-plugin-typescript2';
-import transformer from '[PROJECT NAME]/transformer';
+import transformer from 'ts-reflection/transformer';
 
 export default {
   input: './index.ts',

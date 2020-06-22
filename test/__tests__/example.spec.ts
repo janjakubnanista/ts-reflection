@@ -1,6 +1,6 @@
 import 'jest';
 
 // @ts-ignore
-import PROJECT from '[PROJECT NAME]';
+import PROJECT from 'ts-reflection';
 
 describe('example test suite', () => {});

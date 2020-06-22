@@ -3,7 +3,7 @@
   "compilerOptions": {
     "sourceMap": false,
     "plugins": [
-      { "transform": "[PROJECT NAME]/transformer" }
+      { "transform": "ts-reflection/transformer" }
     ]
   }
 }

@@ -1,3 +1,3 @@
-# ts-transformer-project-template
+# ts-reflection
 
 Template for TypeScript transformer based projects
