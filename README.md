@@ -85,7 +85,12 @@ type ButtonType = 'primary' | 'secondary' | 'link';
 const buttonTypes: ButtonType[] = ['primary', 'secondary', 'link'];
 ```
 
-I was always aware of fragility of such solution and the fact you need to update it by hand every time `ButtonType` changes.
+I was always aware of fragility of such solution and the fact you need to update it by hand every time `ButtonType` changes. Now I can write just
+
+```typescript
+const buttonTypes: ButtonType[] = valuesOf<ButtonType>;
+```
+
 
 The same goes for a list of type properties - typing those lists of `keyof` type values:
 
@@ -95,11 +100,15 @@ interface MyInterface {
   anotherProperty: string;
 }
 
-type KeysOfMyInterface = keyof MyInterface;
-const keysOfMyInterface: KeysOfMyInterface[] = ['property', 'anotherProperty']
+type Key = keyof MyInterface;
+const keys: Key[] = ['property', 'anotherProperty']
 ```
 
-After I finished [`ts-reflection`](https://www.npmjs.com/package/ts-reflection), a TypeScript transformer project that generates type guards based on your types, I decided to take the knowledge I gained and create a transformer that would free me from ever having to type anything like the above manually.
+Which now becomes
+
+```typescript
+const keys: Key[] = propertiesOf<MyInterface>();
+```
 
 
 ## Installation
