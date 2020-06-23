@@ -49,29 +49,43 @@ interface MyInterface {
   hobbies: string[];
 }
 
+// You can now use propertiesOf utility to get all properties of a type
+const properties = propertiesOf<MyInterface>(); // ['name', 'hobbies']
+```
+
+Another one?
+
+```typescript
 class MyClass {
-  private id: string;
-  protected name: string;
-  public getName(): string {
-    return this.name;
+  displayName: string;
+  greet() {
+    console.log('Oh hello there!')
   }
 }
 
+// 
+const properties = propertiesOf<MyClass>(); // ['displayName', 'greet']
+```
+
+Also works with `enums`!
+
+```typescript
 enum MyEnum {
   NO = 0,
   MAYBE = 1,
   YES = 2
 }
 
-type MyType = 'mine' | 'yours' | 'their';
+const properties = propertiesOf<MyEnum>(); // ['NO', 'MAYBE', 'YES']
+```
 
-// You can now use propertiesOf utility to list all the publicly accessible properties of a type
-const propertiesOfMyInterface = propertiesOf<MyInterface>(); // ['name', 'hobbies']
-const propertiesOfMyClass = propertiesOf<MyClass>(); // ['getName']
-const propertiesOfMyEnum = propertiesOf<MyEnum>(); // ['NO', 'MAYBE', 'YES']
+Or something completely different?
 
-// Or valuesOf utility to get all the possible union type values
-const myPossibleTypes = valuesOf<MyType>(); // ['mine', 'yours', 'their']
+```typescript
+type ButtonType = 'primary' | 'secondary' | 'link';
+
+// You can use valuesOf utility to get all the possible union type values
+const buttonTypes = valuesOf<ButtonType>(); // ['primary', 'secondary', 'link']
 ```
 
 <a id="motivation"></a>
@@ -113,7 +127,7 @@ const keys: Key[] = propertiesOf<MyInterface>();
 
 ## Installation
 
-You can find comprehensive installation instructions in the [installation document](https://github.com/janjakubnanista/ts-reflection/blob/main/docs/INSTALLATION.md).
+You can find comprehensive installation instructions in the [installation docs](https://github.com/janjakubnanista/ts-reflection/blob/main/docs/INSTALLATION.md).
 
 ## API
 
