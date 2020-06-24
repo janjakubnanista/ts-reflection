@@ -32,12 +32,6 @@
   "bugs": {
     "url": "https://github.com/janjakubnanista/ts-reflection/issues"
   },
-  "files": [
-    "index.js",
-    "index.d.ts",
-    "transformer/**/*.js",
-    "transformer/**/*.d.ts"
-  ],
   "homepage": "https://github.com/janjakubnanista/ts-reflection#readme",
   "devDependencies": {
     "@types/node": "^14.0.13",
