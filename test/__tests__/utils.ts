@@ -84,5 +84,5 @@ export interface TestInterface {
 
 export const expectPropertiesMatch = (received: unknown[], expected: unknown[]): void => {
   expect(received).toHaveLength(expected.length);
-  expect(new Set(received)).toEqual(new Set(expected));
+  expect(received).toEqual(expect.arrayContaining(expected));
 };
