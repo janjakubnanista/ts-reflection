@@ -7,20 +7,6 @@ import fc from 'fast-check';
 describe('createPropertiesOf', () => {
   const getPropertyName = ({ name }: PropertyDescriptor): PropertyName => name;
 
-  const optionalOf = <T>(arbitrary: fc.Arbitrary<T>): fc.Arbitrary<T | undefined> =>
-    fc.oneof(fc.constantFrom(undefined), arbitrary);
-
-  const optionalBoolean = () => optionalOf(fc.boolean());
-
-  const propertyQueryArbitrary = (): fc.Arbitrary<PropertyQuery> =>
-    fc.record({
-      public: optionalBoolean(),
-      protected: optionalBoolean(),
-      private: optionalBoolean(),
-      readonly: optionalBoolean(),
-      optional: optionalBoolean(),
-    });
-
   const propertyFlagArbitrary = (): fc.Arbitrary<PropertyFlag> =>
     fc.constantFrom(
       PropertyFlag.PUBLIC,
