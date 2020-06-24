@@ -11,7 +11,7 @@
     "copy:meta": "./scripts/copy-metadata.sh",
     "lint:source": "eslint . --fix --ext .ts,.tsx",
     "lint:build": "eslint ./dist --fix --ext .js,.ts",
-    "test:examples": "cd examples && yarn && yarn build && yarn start",
+    "test:examples": "cd examples && yarn --check-files && yarn build && yarn start",
     "test:unit": "jest",
     "test:version": "./scripts/test.sh",
     "test:versions": "./scripts/test-all-versions.sh",
