@@ -1,43 +1,6 @@
 import ts from 'typescript';
 
 /**
- * Helper function that checks whether the array of modifiers
- * contains "private" or "protected" keywords.
- *
- * @param modifiers {ts.ModifiersArray} [undefined] The array of modifiers
- */
-const hasPrivateOrProtectedModifiers = (modifiers?: ts.ModifiersArray): boolean =>
-  !!modifiers?.some(
-    (modifier) => modifier.kind === ts.SyntaxKind.PrivateKeyword || modifier.kind === ts.SyntaxKind.ProtectedKeyword,
-  );
-
-/**
- * Helper function that checks whether a property represented by a Symbol
- * is publicly visible, i.e. it does not have "private" or "protected" modifier
- *
- * @param property {ts.Symbol} Property symbol
- */
-export const isPublicProperty = (property: ts.Symbol): boolean => {
-  const declaration = property.valueDeclaration;
-  if (!declaration) {
-    // TODO This is just a "guess", maybe the missing declaration can mean a private/protected property
-    return true;
-  }
-
-  if (
-    ts.isPropertySignature(declaration) ||
-    ts.isPropertyDeclaration(declaration) ||
-    ts.isMethodDeclaration(declaration) ||
-    ts.isMethodSignature(declaration) ||
-    ts.isParameter(declaration) ||
-    ts.isGetAccessor(declaration)
-  )
-    return !hasPrivateOrProtectedModifiers(declaration.modifiers);
-
-  return false;
-};
-
-/**
  * Helper function that return property name as a ts.Expression.
  * It will make sure that is the property is a numeric literal,
  * it is returned as a number rather than a number-like string

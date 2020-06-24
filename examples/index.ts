@@ -3,17 +3,24 @@ import { propertiesOf, valuesOf } from 'ts-reflection';
 
 interface MyInterface {
   name: string;
-  description: string;
-  hobbies: string[];
+  description?: string;
+  readonly hobbies: string[];
 }
 
 type MyUnion = 'primary' | 'secondary' | 'greg';
 
-const propertiesOfMyInterface = propertiesOf<MyInterface>();
-const valuesOfMyUnion = valuesOf<MyUnion>();
+console.log('All properties of MyInterface: ');
+propertiesOf<MyInterface>().forEach(logProperty);
 
-console.log('Properties of MyInterface: ');
-propertiesOfMyInterface.forEach((property) => console.log('\t- ', property));
+console.log('Readonly properties of MyInterface: ');
+propertiesOf<MyInterface>({ readonly: true }).forEach(logProperty);
+
+console.log('Optional properties of MyInterface: ');
+propertiesOf<MyInterface>({ optional: true }).forEach(logProperty);
 
 console.log('Values of MyUnion: ');
-valuesOfMyUnion.forEach((value) => console.log('\t- ', value));
+valuesOf<MyUnion>().forEach(logProperty);
+
+function logProperty(value: unknown): void {
+  console.log('\t-', value);
+}

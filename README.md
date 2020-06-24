@@ -32,9 +32,9 @@
 <p align="center">
   <a href="#motivation">Motivation</a>
   <span>|</span>
-  <a href="https://github.com/janjakubnanista/ts-reflection/blob/main/docs/INSTALLATION.md">Installation</a>
-  <span>|</span>
   <a href="https://github.com/janjakubnanista/ts-reflection/blob/main/docs/API.md">API</a>
+  <span>|</span>
+  <a href="https://github.com/janjakubnanista/ts-reflection/blob/main/docs/INSTALLATION.md">Installation</a>
   <span>|</span>
   <a href="#acknowledgement">Acknowledgement</a>
 </p>
@@ -44,44 +44,22 @@
 As they say *an example is worth a thousand API docs* so why not start with one.
 
 ```typescript
+import { propertiesOf } from 'ts-reflection';
+
 interface MyInterface {
   name: string;
   hobbies: string[];
 }
 
-// You can now use propertiesOf utility to get all properties of a type
+// You can now use propertiesOf utility to get properties of a type
 const properties = propertiesOf<MyInterface>(); // ['name', 'hobbies']
 ```
 
-Another one?
+Let's do another one!
 
 ```typescript
-class MyClass {
-  displayName: string;
-  greet() {
-    console.log('Oh hello there!')
-  }
-}
+import { valuesOf } from 'ts-reflection';
 
-// 
-const properties = propertiesOf<MyClass>(); // ['displayName', 'greet']
-```
-
-Also works with `enums`!
-
-```typescript
-enum MyEnum {
-  NO = 0,
-  MAYBE = 1,
-  YES = 2
-}
-
-const properties = propertiesOf<MyEnum>(); // ['NO', 'MAYBE', 'YES']
-```
-
-Or something completely different?
-
-```typescript
 type ButtonType = 'primary' | 'secondary' | 'link';
 
 // You can use valuesOf utility to get all the possible union type values
@@ -105,7 +83,6 @@ I was always aware of fragility of such solution and the fact you need to update
 const buttonTypes: ButtonType[] = valuesOf<ButtonType>;
 ```
 
-
 The same goes for a list of type properties - typing those lists of `keyof` type values:
 
 ```typescript
@@ -124,16 +101,57 @@ Which now becomes
 const keys: Key[] = propertiesOf<MyInterface>();
 ```
 
+## API
+
+_You can find comprehensive API documentation in the [API docs](https://github.com/janjakubnanista/ts-reflection/blob/main/docs/API.md)._
+
+`ts-reflection` exports two functions: `valuesOf` (for accessing values of union types) and `propertiesOf` (for accessing properties of types).
+
+### `valuesOf`
+
+`valuesOf` is a function that returns all the possible literal values of union types:
+
+```typescript
+import { valuesOf } from 'ts-reflection';
+
+type UnionType = 'string value' | 1 | true | Symbol.toStringTag;
+
+// You can use valuesOf utility to get all the possible union type values
+const unionTypeValues = valuesOf<UnionType>(); // ['string value', 1, true, Symbol.toStringTag]
+```
+
+Please read the full [API docs](https://github.com/janjakubnanista/ts-reflection/blob/main/docs/API_REFLECTION.md#valuesOf) for more information about `valuesOf`.
+
+### `propertiesOf`
+
+`propertiesOf` is a function that returns property names of types: 
+
+```typescript
+import { propertiesOf } from 'ts-reflection';
+
+interface MyInterface {
+  name: string;
+  displayName?: string;
+  readonly hobbies: string[];
+}
+
+// When called with no arguments, propertiesOf() returns all public properties of a type
+const properties = propertiesOf<MyInterface>(); // ['name', 'displayName', 'hobbies']
+
+// You can also call it with "queries" to be more specific about what properties you want to get
+const readonlyProperties = propertiesOf<MyInterface>({ readonly: true }); // ['hobbies']
+const mutableProperties = propertiesOf<MyInterface>({ readonly: false }); // ['name', 'displayName']
+const optionalProperties = propertiesOf<MyInterface>({ optional: true }); // ['displayName']
+const requiredProperties = propertiesOf<MyInterface>({ optional: false }); // ['name', 'hobbies']
+```
+
+Please read the full [API docs](https://github.com/janjakubnanista/ts-reflection/blob/main/docs/API_REFLECTION.md#propertiesOf) for more information about `propertiesOf` and the queries it supports.
 
 ## Installation
 
 You can find comprehensive installation instructions in the [installation docs](https://github.com/janjakubnanista/ts-reflection/blob/main/docs/INSTALLATION.md).
 
-## API
-
-You can find comprehensive API documentation in the [API docs](https://github.com/janjakubnanista/ts-reflection/blob/main/docs/API.md).
-
 <a id="acknowledgement"></a>
 ## Acknowledgement
 
-This idea was inspired by [`ts-transformer-keys`](https://www.npmjs.com/package/ts-transformer-keys) NPM module. The E2E testing infrastructure that ensures compatibility with all minor TypeScript versions is based on my [`ts-reflection`](https://www.npmjs.com/package/ts-reflection) project.
+This idea was inspired by [`ts-transformer-keys`](https://www.npmjs.com/package/ts-transformer-keys) NPM module. The E2E testing infrastructure that ensures compatibility with all minor TypeScript versions is based on my [`ts-type-checked`](https://www.npmjs.com/package/ts-type-checked) project.

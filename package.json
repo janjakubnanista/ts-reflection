@@ -11,10 +11,11 @@
     "copy:meta": "./scripts/copy-metadata.sh",
     "lint:source": "eslint . --fix --ext .ts,.tsx",
     "lint:build": "eslint ./dist --fix --ext .js,.ts",
-    "test:examples": "cd examples && yarn && yarn build && yarn start",
+    "test:examples": "cd examples && yarn --check-files && yarn build && yarn start",
+    "test:unit": "jest",
     "test:version": "./scripts/test.sh",
     "test:versions": "./scripts/test-all-versions.sh",
-    "test": "yarn test:versions && yarn test:examples"
+    "test": "yarn test:unit && yarn test:versions && yarn test:examples"
   },
   "repository": {
     "type": "git",
@@ -32,14 +33,9 @@
   "bugs": {
     "url": "https://github.com/janjakubnanista/ts-reflection/issues"
   },
-  "files": [
-    "index.js",
-    "index.d.ts",
-    "transformer/**/*.js",
-    "transformer/**/*.d.ts"
-  ],
   "homepage": "https://github.com/janjakubnanista/ts-reflection#readme",
   "devDependencies": {
+    "@types/jest": "^26.0.0",
     "@types/node": "^14.0.13",
     "@typescript-eslint/eslint-plugin": "^3.2.0",
     "@typescript-eslint/parser": "^3.2.0",
@@ -48,10 +44,12 @@
     "eslint-plugin-prettier": "^3.1.3",
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-sort-imports-es6-autofix": "^0.5.0",
-    "fast-check": "^1.25.0",
+    "fast-check": "^1.25.1",
     "husky": "^4.2.5",
+    "jest": "^26.0.1",
     "lint-staged": "^10.2.10",
     "prettier": "^2.0.5",
+    "ts-jest": "^26.1.1",
     "tslib": "^2.0.0",
     "ttypescript": "^1.5.10",
     "typescript": "^3.9.5"
@@ -63,6 +61,12 @@
     "hooks": {
       "pre-commit": "lint-staged"
     }
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testMatch": [
+      "<rootDir>/src/**/__tests__/**/*.spec.ts"
+    ]
   },
   "lint-staged": {
     "*.{js,ts}(x)?": [

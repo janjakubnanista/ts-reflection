@@ -1,5 +1,5 @@
 {
-  "name": "@ts-reflection-examples/ttypescript",
+  "name": "@ts-reflection-examples/ts-node",
   "private": true,
   "version": "0.0.1",
   "scripts": {

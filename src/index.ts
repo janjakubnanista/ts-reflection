@@ -1,11 +1,7 @@
+import { PropertyOf, PropertyQuery } from './types';
+
 // Here the project needs to declare the fictional exports
 export declare function generatedFunction(): void;
-
-export type NameOfPropertyOfType<T, C = unknown> = NonNullable<
-  {
-    [K in keyof T]: T[K] extends C ? K : never;
-  }[keyof T]
->;
 
 /**
  * Returns and array of property names for a given interface / type.
@@ -23,9 +19,10 @@ export type NameOfPropertyOfType<T, C = unknown> = NonNullable<
  *
  * @function
  * @template T Interface/type to get properties of
+ * @param type {PropertyType} The types of properties to get
  * @return {String[]} An array of property names of a given interface / type
  */
-export declare function propertiesOf<T>(): NameOfPropertyOfType<T>[];
+export declare function propertiesOf<T>(...queries: PropertyQuery[]): PropertyOf<T>[];
 
 /**
  * Returns an array of possible literal values of (a union) type T.

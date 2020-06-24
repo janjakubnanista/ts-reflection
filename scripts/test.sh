@@ -8,7 +8,6 @@
 # The idea is to have a separate package under the `test` folder with its own package.json.
 # This package contains the test suite (as well as some test utilities) that will be run.
 
-set -x
 set -e
 
 DEBUG=

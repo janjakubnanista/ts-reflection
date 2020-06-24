@@ -13,14 +13,22 @@ Two functions are exported: `valuesOf` and `propertiesOf`. (funny enough neither
 import { propertiesOf, valuesOf } from 'ts-reflection';
 ```
 
-#### `function valuesOf<T>(): T[]`
-
-`valuesOf` takes one type argument `T` (a union type) and returns all possible literal values of such type:
+<a id="valuesOf"></a>
+## `valuesOf`
 
 ```typescript
-type ButtonType = 'primary' | 'secondary' | 'link';
+function valuesOf<T>(): T[]
+```
 
-const buttonTypes: ButtonType[] = valuesOf<ButtonType>(); // ['primary', 'secondary', 'link']
+`valuesOf` takes one type argument `T` (a union type usually) and returns all possible literal values of such type:
+
+```typescript
+import { valuesOf } from 'ts-reflection';
+
+type UnionType = 'string value' | 1 | true | Symbol.toStringTag;
+
+// You can use valuesOf utility to get all the possible union type values
+const unionTypeValues = valuesOf<UnionType>(); // ['string value', 1, true, Symbol.toStringTag]
 ```
 
 In case the union type does not contain any literal types, `valuesOf` will return an empty array:
@@ -55,6 +63,14 @@ enum MyEnum {
 const valuesOfMyEnum = valuesOf<MyEnum>(); // [0, 1, 2]
 ```
 
+`valuesOf` will expand `boolean` type into `true` and `false`:
+
+```typescript
+type UnionType = 'string value' | boolean;
+
+const values = valuesOf<UnionType>(); // ['string value', true, false]
+```
+
 **The type that you pass to `valuesOf` must not be a type parameter!** In other words:
 
 ```typescript
@@ -67,9 +83,22 @@ function doMyStuff<T>(value: unknown) {
 }
 ```
 
-#### `function propertiesOf<T>(): (keyof T)[]`
+<a id="propertiesOf"></a>
+## `propertiesOf`
 
-`propertiesOf` takes one type argument `T` and returns all its public (i.e. not `private` or `protected`) properties:
+```typescript
+function propertiesOf<T>(...queries: PropertyQuery[]): (keyof T)[]
+```
+
+`propertiesOf` takes one type argument `T` and an (optional) list of `PropertyQueries` (these allow fine-grained access to what properties you want to list).
+
+**The type that you pass to `propertiesOf` must not be a type parameter either!** (see above)
+
+### `propertiesOf()`
+
+If called with no arguments, it returns all `public` property names of a type (all interface properties are `public`):
+
+#### interfaces
 
 ```typescript
 interface MyInterface {
@@ -77,18 +106,10 @@ interface MyInterface {
   anotherProperty: string;
 }
 
-const interfaceProperties: (keyof MyInterface)[] = propertiesOf<MyInterface>(); // ['property', 'anotherProperty']
-
-class MyClass {
-  private id: string;
-  protected name: string;
-  public displayName: sting;
-}
-
-const classProperties: (keyof MyClass)[] = propertiesOf<MyInterface>(); // ['displayName']
+const properties = propertiesOf<MyInterface>(); // ['property', 'anotherProperty']
 ```
 
-`propertiesOf` also works nicely with `enums`, you no longer need to hack any `Object.keys` calls:
+#### enums
 
 ```typescript
 enum MyEnum {
@@ -100,5 +121,71 @@ enum MyEnum {
 const propertiesOfMyEnum = propertiesOf<MyEnum>(); // ['NO', 'MAYBE', 'YES']
 ```
 
-**The type that you pass to `propertiesOf` must not be a type parameter either!** (see above)
+#### classes
+
+```typescript
+class MyClass {
+  private id: string;
+  protected name: string;
+  public displayName: sting;
+}
+
+const properties = propertiesOf<MyInterface>(); // ['displayName']
+```
+
+### `propertiesOf(query: PropertyQuery)`
+
+When `propertiesOf` is called with one `PropertyQuery`, it returns all the properties that match that query. Here is how such a query looks:
+
+```typescript
+interface PropertyQuery {
+  public?: boolean;
+  protected?: boolean;
+  private?: boolean;
+  readonly?: boolean;
+  optional?: boolean;
+}
+```
+
+Here are some examples of such queries:
+
+```typescript
+// Get all the private properties
+const privateProperties = propertiesOf<MyClass>({ private: true });
+
+// Get all readonly properties
+const readonlyProperties = propertiesOf<MyClass>({ readonly: true });
+
+// Get all non-readonly properties
+const nonReadonlyProperties = propertiesOf<MyClass>({ readonly: false });
+
+// Get all optional properties
+const optionalProperties = propertiesOf<MyClass>({ optional: true });
+
+// Get all required properties
+const requiredProperties = propertiesOf<MyClass>({ optional: false });
+
+// Get all readonly optional properties
+const readonlyOptionalProperties = propertiesOf<MyClass>({ readonly: true, optional: true });
+
+// Get all readonly optional properties that are not public
+const readonlyOptionalProperties = propertiesOf<MyClass>({ readonly: true, optional: true, public: false });
+
+// Get all required properties that are not public
+const readonlyOptionalProperties = propertiesOf<MyClass>({ optional: false, public: false });
+```
+
+### `propertiesOf(...queries: PropertyQuery[])`
+
+When called with multiple queries, `propertiesOf` will return all properties that match at least one of the queries.
+
+Here are some examples of such queries:
+
+```typescript
+// Get all optional or readonly properties
+const optionalOrReadonlyProperties = propertiesOf<MyClass>({ optional: true }, { readonly: true });
+
+// Get all private or protected properties
+const privateOrProtectedProperties = propertiesOf<MyClass>({ private: true }, { protected: true });
+```
 
