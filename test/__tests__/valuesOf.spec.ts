@@ -14,6 +14,21 @@ describe('valuesOf', () => {
   type StringLiteralUnion = 'primary' | 'secondary';
   const stringLiteralValues: StringLiteralUnion[] = ['primary', 'secondary'];
 
+  type DuplicateUnion =
+    | 'primary'
+    | 'primary'
+    | 'secondary'
+    | 'secondary'
+    | 1
+    | 1
+    | 1n
+    | 1n
+    | true
+    | true
+    | false
+    | false;
+  const duplicateUnionValues: DuplicateUnion[] = ['primary', 'secondary', 1, 1n, true, false];
+
   it('should return an empty array for number type', () => {
     expect(valuesOf<number>()).toEqual([]);
   });
@@ -61,6 +76,24 @@ describe('valuesOf', () => {
     type TypeReference1 = NumericLiteralUnion | StringLiteralUnion | number | string;
 
     expectPropertiesMatch(valuesOf<TypeReference1>(), []);
+  });
+
+  it('should deduplicate duplicate values within a type', () => {
+    expect(valuesOf<DuplicateUnion>()).toHaveLength(6);
+    expectPropertiesMatch(valuesOf<DuplicateUnion>(), duplicateUnionValues);
+  });
+
+  it('should deduplicate duplicate values across types', () => {
+    type TypeReference1 = DuplicateUnion | DuplicateUnion | 'primary' | 1;
+
+    expect(valuesOf<TypeReference1>()).toHaveLength(6);
+    expectPropertiesMatch(valuesOf<TypeReference1>(), duplicateUnionValues);
+  });
+
+  it('should expand boolean into true and false', () => {
+    type TypeReference1 = 'property' | boolean;
+
+    expectPropertiesMatch(valuesOf<TypeReference1>(), ['property', true, false]);
   });
 
   it('should list all the values of regular enums', () => {

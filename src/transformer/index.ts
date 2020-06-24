@@ -1,4 +1,6 @@
-import { getPossibleValues, getPublicProperties } from './utils';
+import { createPropertiesOf } from './utils/properties';
+import { createRequire } from './utils/codeGenerators';
+import { createValuesOf } from './utils/values';
 import { isOurCallExpression, isOurImportExpression } from './visitor/assertions';
 import { visitNodeAndChildren } from './visitor/visitNodeAndChildren';
 import ts from 'typescript';
@@ -19,6 +21,15 @@ export default (program: ts.Program): ts.TransformerFactory<ts.SourceFile> => {
   const typeChecker = program.getTypeChecker();
 
   return (context: ts.TransformationContext) => (file: ts.SourceFile) => {
+    const createPropertiesOfIdentifier = ts.createIdentifier('___getPropertyFilter___');
+    const createPropertiesOfImport = createRequire(
+      createPropertiesOfIdentifier,
+      'ts-reflection/helpers/createPropertiesOf',
+      'createPropertiesOf',
+    );
+
+    let needsFilterPropertiesImport = false;
+
     // First transform the file
     const transformedFile = visitNodeAndChildren(file, program, context, (node: ts.Node) => {
       // All the imports from ts-reflection are fake so we need to remove them all
@@ -30,7 +41,13 @@ export default (program: ts.Program): ts.TransformerFactory<ts.SourceFile> => {
           throw new Error('propertiesOf<T>() requires one type parameter, none specified');
         }
 
-        return ts.createArrayLiteral(getPublicProperties(typeChecker, typeNode));
+        needsFilterPropertiesImport = true;
+
+        const propertiesOfFunction = ts.createCall(createPropertiesOfIdentifier, undefined, [
+          createPropertiesOf(typeChecker, typeNode),
+        ]);
+
+        return ts.createCall(propertiesOfFunction, undefined, node.arguments);
       }
 
       if (isOurCallExpression(node, 'valuesOf', typeChecker)) {
@@ -39,11 +56,18 @@ export default (program: ts.Program): ts.TransformerFactory<ts.SourceFile> => {
           throw new Error('valuesOf<T>() requires one type parameter, none specified');
         }
 
-        return ts.createArrayLiteral(getPossibleValues(typeChecker, typeNode));
+        return createValuesOf(typeChecker, typeNode);
       }
 
       return node;
     });
+
+    if (needsFilterPropertiesImport) {
+      return ts.updateSourceFileNode(transformedFile, [
+        ...(needsFilterPropertiesImport ? [createPropertiesOfImport] : []),
+        ...transformedFile.statements,
+      ]);
+    }
 
     return transformedFile;
   };
