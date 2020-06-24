@@ -1,7 +1,6 @@
 import 'jest';
 
 // @ts-ignore
-import { PropertyType } from 'ts-reflection/types';
 import { propertiesOf } from 'ts-reflection';
 
 const expectPropertiesMatch = (received: unknown[], expected: unknown[]) => {

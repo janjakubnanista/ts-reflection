@@ -1,12 +1,8 @@
 import 'jest';
 
 // @ts-ignore
+import { expectPropertiesMatch } from '../utils';
 import { propertiesOf } from 'ts-reflection';
-
-const expectPropertiesMatch = (received: unknown[], expected: unknown[]) => {
-  expect(received).toHaveLength(expected.length);
-  expect(new Set(received)).toEqual(new Set(expected));
-};
 
 describe('propertiesOf', () => {
   describe('basics', () => {
