@@ -1,7 +1,8 @@
 import 'jest';
 
-// @ts-ignore
 import { expectPropertiesMatch } from '../utils';
+
+// @ts-ignore
 import { propertiesOf } from 'ts-reflection';
 
 describe('propertiesOf', () => {

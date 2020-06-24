@@ -63,7 +63,7 @@ export const getPropertyDescriptors = (
   scope: ts.TypeNode,
   type: ts.Type = typeChecker.getTypeFromTypeNode(scope),
 ): PropertyDescriptor[] => {
-  const declaration = type.symbol.valueDeclaration;
+  const declaration = type.symbol?.valueDeclaration;
   if (declaration && ts.isEnumDeclaration(declaration)) {
     return getEnumMembers(declaration);
   }
