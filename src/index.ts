@@ -1,8 +1,5 @@
 import { PropertyOf, PropertyQuery } from './types';
 
-// Here the project needs to declare the fictional exports
-export declare function generatedFunction(): void;
-
 /**
  * Returns and array of property names for a given interface / type.
  *
