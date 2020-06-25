@@ -63,13 +63,13 @@ describe('valuesOf', () => {
   it('should exclude all string literals if string is mixed with union', () => {
     type TypeReference1 = NumericLiteralUnion | StringLiteralUnion | string;
 
-    expectPropertiesMatch(valuesOf<TypeReference1>(), [...numericLiteralValues]);
+    expectPropertiesMatch(valuesOf<TypeReference1>(), numericLiteralValues);
   });
 
   it('should exclude all number literals if number is mixed with union', () => {
     type TypeReference1 = NumericLiteralUnion | StringLiteralUnion | number;
 
-    expectPropertiesMatch(valuesOf<TypeReference1>(), [...stringLiteralValues]);
+    expectPropertiesMatch(valuesOf<TypeReference1>(), stringLiteralValues);
   });
 
   it('should exclude all literals if string and number are mixed with union', () => {
@@ -93,7 +93,8 @@ describe('valuesOf', () => {
   it('should expand boolean into true and false', () => {
     type TypeReference1 = 'property' | boolean;
 
-    expectPropertiesMatch(valuesOf<TypeReference1>(), ['property', true, false]);
+    const expectedValues: TypeReference1[] = ['property', true, false];
+    expectPropertiesMatch(valuesOf<TypeReference1>(), expectedValues);
   });
 
   it('should list all the values of regular enums', () => {
@@ -102,7 +103,7 @@ describe('valuesOf', () => {
       'B',
     }
 
-    const expectedValues: unknown[] = [Enum.A, Enum.B];
+    const expectedValues: Enum[] = [Enum.A, Enum.B];
     expectPropertiesMatch(valuesOf<Enum>(), expectedValues);
   });
 
@@ -112,7 +113,7 @@ describe('valuesOf', () => {
       'B' = 'string',
     }
 
-    const expectedValues: unknown[] = [Enum.A, Enum.B];
+    const expectedValues: Enum[] = [Enum.A, Enum.B];
     expectPropertiesMatch(valuesOf<Enum>(), expectedValues);
   });
 
@@ -122,7 +123,7 @@ describe('valuesOf', () => {
       'B',
     }
 
-    const expectedValues: unknown[] = [Enum.A, Enum.B];
+    const expectedValues: Enum[] = [Enum.A, Enum.B];
     expectPropertiesMatch(valuesOf<Enum>(), expectedValues);
   });
 
@@ -132,7 +133,14 @@ describe('valuesOf', () => {
       'B' = 'string',
     }
 
-    const expectedValues: unknown[] = [Enum.A, Enum.B];
+    const expectedValues: Enum[] = [Enum.A, Enum.B];
     expectPropertiesMatch(valuesOf<Enum>(), expectedValues);
+  });
+
+  it('should exclude any non-literal types', () => {
+    type MyNonLiteralEnum = Promise<unknown> | HTMLAnchorElement | WebSocket | Record<string, unknown> | 'literal';
+
+    const expectedValues: MyNonLiteralEnum[] = ['literal'];
+    expectPropertiesMatch(valuesOf<MyNonLiteralEnum>(), expectedValues);
   });
 });
