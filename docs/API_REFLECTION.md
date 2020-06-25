@@ -111,6 +111,8 @@ const properties = propertiesOf<MyInterface>(); // ['property', 'anotherProperty
 
 #### enums
 
+**When using `propertiesOf` with enums it's important to include the `typeof` operator, otherwise you will get properties of the enum member types (e.g. strings or numbers)!**
+
 ```typescript
 enum MyEnum {
   NO = 0,
@@ -118,10 +120,12 @@ enum MyEnum {
   YES = 2
 }
 
-const propertiesOfMyEnum = propertiesOf<MyEnum>(); // ['NO', 'MAYBE', 'YES']
+const propertiesOfMyEnum = propertiesOf<typeof MyEnum>(); // ['NO', 'MAYBE', 'YES']
 ```
 
 #### classes
+
+`propertiesOf` will return the list of all `public` class properties:
 
 ```typescript
 class MyClass {
@@ -130,7 +134,7 @@ class MyClass {
   public displayName: sting;
 }
 
-const properties = propertiesOf<MyInterface>(); // ['displayName']
+const properties = propertiesOf<MyClass>(); // ['displayName']
 ```
 
 ### `propertiesOf(query: PropertyQuery)`
