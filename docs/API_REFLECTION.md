@@ -111,8 +111,6 @@ const properties = propertiesOf<MyInterface>(); // ['property', 'anotherProperty
 
 #### enums
 
-**When using `propertiesOf` with enums it's important to include the `typeof` operator, otherwise you will get properties of the enum member types (e.g. strings or numbers)!**
-
 ```typescript
 enum MyEnum {
   NO = 0,
@@ -121,6 +119,20 @@ enum MyEnum {
 }
 
 const propertiesOfMyEnum = propertiesOf<typeof MyEnum>(); // ['NO', 'MAYBE', 'YES']
+```
+
+**When using `propertiesOf` with enums it's important to include the `typeof` operator!**
+
+Although the output of `propertiesOf` will be the same whether you use `typeof` or not, the type of the resulting array will be wrong if you don't use it:
+
+```typescript
+// When called with typeof, the type of 'properties' is correct: ('NO' | 'MAYBE' | 'YES')[]
+const properties = propertiesOf<typeof MyEnum>();
+
+// When called without typeof, the type of properties is incorrect!
+// It will actually be an array of properties of number type since
+// MyEnum refers to a value of MyEnum rather than the MyEnum itself
+const propertiesOfMyEnumWithoutTypeof = propertiesOf<MyEnum>();
 ```
 
 #### classes

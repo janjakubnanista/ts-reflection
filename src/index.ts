@@ -24,7 +24,7 @@ export declare function generatedFunction(): void;
  * const propertiesOfClass = propertiesOf<MyClass>();
  *
  * // typeof operator is necessary when working with enums, otherwise
- * // you will get properties of the enum members!
+ * // the array of properties will have a wrong type!
  * const propertiesOfEnum = propertiesOf<typeof MyEnum>();
  * ```
  *
