@@ -83,8 +83,15 @@ cd "$SANDBOX_PATH"
 # Get the correct version of TypeScript config
 cp "tsconfig.${TS_LIB}.json" "tsconfig.json"
 
+# Remove ts-reflection dependency to make sure we don't get a stale version
+rm -rf node_modules/ts-reflection
+
 # And add a specific version of typescript
-yarn add -dev --exact typescript@${VERSION}
+rm -rf node_modules/typescript
+yarn add --dev --exact typescript@${VERSION}
+
+# Install the test project dependencies
+yarn --check-files
 
 # Clear jest cache
 yarn jest --clearCache
