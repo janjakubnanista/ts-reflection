@@ -25,7 +25,15 @@ export declare function generatedFunction(): void;
 export declare function propertiesOf<T>(...queries: PropertyQuery[]): PropertyOf<T>[];
 
 /**
- * Returns an array of possible literal values of (a union) type T.
+ * Returns an array of possible literal values of type T, most commonly a union or an enum
+ *
+ * @example
+ * ```
+ * type ButtonType = "primary" | "secondary" | "error" | "link";
+ *
+ * // allButtonTypes will be an array of all the ButtonType values, i.e. ["primary" | "secondary" | "error" | "link"]
+ * const buttonTypes = valuesOf<ButtonType>();
+ * ```
  *
  * Types that have unlimited amount of values will not be present in the array, for example:
  *
@@ -38,19 +46,10 @@ export declare function propertiesOf<T>(...queries: PropertyQuery[]): PropertyOf
  * const unionValues = valuesOf<Union>();
  * ```
  *
- * @example
- * ```
- * type ButtonType = "primary" | "secondary" | "error" | "link";
- *
- * // allButtonTypes will be an array of all the ButtonType values, i.e. ["primary" | "secondary" | "error" | "link"]
- * const allButtonTypes = valuesOf<ButtonType>();
- * ```
- *
- * @function
  * @template T
  * @return {T[]} Array of possible literal values of type T
  */
-export declare function valuesOf<T extends string | number | boolean | bigint>(): T[];
+export declare function valuesOf<T>(): T[];
 
 // If someone forgets to register ts-reflection/transformer then tsc
 // is going to actually import this file which will throw this error
