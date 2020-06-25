@@ -13,14 +13,25 @@ export declare function generatedFunction(): void;
  *    age: number;
  * }
  *
- * const propertiesOfMyInterface = propertiesOf<MyInterface>();
- * console.log(propertiesOfMyInterface); // ['name', 'age'];
+ * const propertiesOfMyInterface = propertiesOf<MyInterface>(); // ['name', 'age']
  * ```
  *
- * @function
- * @template T Interface/type to get properties of
- * @param type {PropertyType} The types of properties to get
- * @return {String[]} An array of property names of a given interface / type
+ * It works with any type including enums, classes or built-in types:
+ *
+ * @example
+ * ```
+ * const propertiesOfString = propertiesOf<string>(); // ['length', 'slice', ...]
+ * const propertiesOfClass = propertiesOf<MyClass>();
+ *
+ * // typeof operator is necessary when working with enums, otherwise
+ * // you will get properties of the enum members!
+ * const propertiesOfEnum = propertiesOf<typeof MyEnum>();
+ * ```
+ *
+ * @template T Type to get properties of
+ * @param {...PropertyQuery} queries [{ public: true }] List of property queries
+ *
+ * @return {(keyof T)[]} An array of property names of a given interface / type
  */
 export declare function propertiesOf<T>(...queries: PropertyQuery[]): PropertyOf<T>[];
 

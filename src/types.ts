@@ -1,8 +1,4 @@
-export type PropertyOf<T, C = unknown> = NonNullable<
-  {
-    [K in keyof T]: T[K] extends C ? K : never;
-  }[keyof T]
->;
+export type PropertyOf<T> = keyof T;
 
 export type PropertyName = string | number | symbol;
 
