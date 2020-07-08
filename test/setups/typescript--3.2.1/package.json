@@ -1,0 +1,11 @@
+{
+  "name": "@ts-reflection/test--typescript--3.2.1",
+  "version": "0.0.1",
+  "private": true,
+  "peerDependencies": {
+    "typescript": ">=3.2.1"
+  },
+  "dependencies": {
+    "ts-reflection": "file:../../../dist"
+  }
+}

@@ -4,8 +4,8 @@ This folder contains a `yarn workspace` based project with examples of integrati
 
 - `webpack`
 - `rollup`
+- `ts-node`
 - `ttypescript`
-- `jest` (using `ttypescript`)
-
-## `webpack`
+- `jest`
+- `mocha`
 

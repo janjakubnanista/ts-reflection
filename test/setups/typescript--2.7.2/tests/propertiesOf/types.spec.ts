@@ -1,8 +1,6 @@
 import 'jest';
 
-import { expectPropertiesMatch } from '../utils';
-
-// @ts-ignore
+import { expectPropertiesMatch } from '../../../../utils/utils.v2';
 import { propertiesOf } from 'ts-reflection';
 
 describe('propertiesOf', () => {
@@ -13,13 +11,6 @@ describe('propertiesOf', () => {
 
     it('should return an empty array for unknown', () => {
       expectPropertiesMatch(propertiesOf<unknown>(), []);
-    });
-
-    it('should return correct properties of bigint', () => {
-      const expectedProperties = ['toString', 'toLocaleString', 'valueOf', Symbol.toStringTag];
-
-      expectPropertiesMatch(propertiesOf<bigint>(), expectedProperties);
-      expectPropertiesMatch(propertiesOf<BigInt>(), expectedProperties);
     });
 
     it('should return correct properties of boolean', () => {
