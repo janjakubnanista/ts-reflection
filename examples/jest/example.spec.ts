@@ -1,6 +1,5 @@
 import 'jest';
 
-// @ts-ignore
 import { propertiesOf, valuesOf } from 'ts-reflection';
 
 describe('example jest test suite', () => {

@@ -1,0 +1,20 @@
+{
+  "name": "@ts-reflection-examples/mocha",
+  "private": true,
+  "version": "0.0.1",
+  "scripts": {
+    "build": "echo 'mocha based example requires no building'",
+    "clean": "echo 'mocha based example requires no cleaning'",
+    "test": "mocha"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.2.11",
+    "@types/mocha": "^7.0.2",
+    "chai": "^4.2.0",
+    "mocha": "8.0.1",
+    "ts-node": "8.10.2",
+    "ts-reflection": "file:../../dist",
+    "ttypescript": "^1.5.10",
+    "typescript": "^3.9.6"
+  }
+}

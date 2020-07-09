@@ -24,7 +24,7 @@ export default (program: ts.Program): ts.TransformerFactory<ts.SourceFile> => {
     const createPropertiesOfIdentifier = ts.createIdentifier('___getPropertyFilter___');
     const createPropertiesOfImport = createRequire(
       createPropertiesOfIdentifier,
-      'ts-reflection/helpers/createPropertiesOf',
+      'ts-reflection/runtime',
       'createPropertiesOf',
     );
 

@@ -1,6 +1,6 @@
 import { PropertyDescriptor } from '../types';
 import { PropertyFlag } from '../../types';
-import { getPropertyAccessor } from '../utils/ast';
+import { getPropertyAccessor, isPrivateIdentifier } from '../utils/ast';
 import ts from 'typescript';
 
 const getPropertyFlags = (property: ts.Symbol): PropertyFlag => {
@@ -18,6 +18,10 @@ const getPropertyFlags = (property: ts.Symbol): PropertyFlag => {
       ts.isSetAccessor(declaration))
   ) {
     flags = flags | (declaration.questionToken ? PropertyFlag.OPTIONAL : 0);
+
+    if (isPrivateIdentifier(declaration.name)) {
+      flags = flags | PropertyFlag.PRIVATE;
+    }
 
     declaration.modifiers?.forEach((modifier) => {
       switch (modifier.kind) {

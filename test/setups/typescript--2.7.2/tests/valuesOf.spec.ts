@@ -1,6 +1,4 @@
 import 'jest';
-
-// @ts-ignore
 import { valuesOf } from 'ts-reflection';
 
 const expectPropertiesMatch = (received: unknown[], expected: unknown[]) => {
@@ -14,20 +12,8 @@ describe('valuesOf', () => {
   type StringLiteralUnion = 'primary' | 'secondary';
   const stringLiteralValues: StringLiteralUnion[] = ['primary', 'secondary'];
 
-  type DuplicateUnion =
-    | 'primary'
-    | 'primary'
-    | 'secondary'
-    | 'secondary'
-    | 1
-    | 1
-    | 1n
-    | 1n
-    | true
-    | true
-    | false
-    | false;
-  const duplicateUnionValues: DuplicateUnion[] = ['primary', 'secondary', 1, 1n, true, false];
+  type DuplicateUnion = 'primary' | 'primary' | 'secondary' | 'secondary' | 1 | 1 | true | true | false | false;
+  const duplicateUnionValues: DuplicateUnion[] = ['primary', 'secondary', 1, true, false];
 
   it('should return an empty array for number type', () => {
     expect(valuesOf<number>()).toEqual([]);
@@ -79,14 +65,14 @@ describe('valuesOf', () => {
   });
 
   it('should deduplicate duplicate values within a type', () => {
-    expect(valuesOf<DuplicateUnion>()).toHaveLength(6);
+    expect(valuesOf<DuplicateUnion>()).toHaveLength(5);
     expectPropertiesMatch(valuesOf<DuplicateUnion>(), duplicateUnionValues);
   });
 
   it('should deduplicate duplicate values across types', () => {
     type TypeReference1 = DuplicateUnion | DuplicateUnion | 'primary' | 1;
 
-    expect(valuesOf<TypeReference1>()).toHaveLength(6);
+    expect(valuesOf<TypeReference1>()).toHaveLength(5);
     expectPropertiesMatch(valuesOf<TypeReference1>(), duplicateUnionValues);
   });
 
@@ -138,7 +124,7 @@ describe('valuesOf', () => {
   });
 
   it('should exclude any non-literal types', () => {
-    type MyNonLiteralEnum = Promise<unknown> | HTMLAnchorElement | WebSocket | Record<string, unknown> | 'literal';
+    type MyNonLiteralEnum = Promise<unknown> | HTMLAnchorElement | Record<string, unknown> | 'literal';
 
     const expectedValues: MyNonLiteralEnum[] = ['literal'];
     expectPropertiesMatch(valuesOf<MyNonLiteralEnum>(), expectedValues);

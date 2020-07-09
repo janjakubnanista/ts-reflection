@@ -1,7 +1,7 @@
 import 'jest';
 import { PropertyDescriptor, PropertyFlag, PropertyName } from '../../types';
 import { PropertyQuery } from '../../types';
-import { createPropertiesOf } from '../createPropertiesOf';
+import { createPropertiesOf } from '../index';
 import fc from 'fast-check';
 
 describe('createPropertiesOf', () => {
