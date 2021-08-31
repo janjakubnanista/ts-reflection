@@ -15,3 +15,7 @@ examples/index.*.js
 
 # Ignore tarballs created when testing
 *.tgz
+
+
+.devcontainer
+pnpm-lock.yaml

@@ -1,9 +1,9 @@
+import { createImport, createRequire } from './utils/codeGenerators';
 import { createPropertiesOf } from './utils/properties';
-import { createRequire } from './utils/codeGenerators';
 import { createValuesOf } from './utils/values';
 import { isOurCallExpression, isOurImportExpression } from './visitor/assertions';
 import { visitNodeAndChildren } from './visitor/visitNodeAndChildren';
-import ts from 'typescript';
+import ts, { ModuleKind } from 'typescript';
 
 /**
  * The main transformer function.
@@ -19,15 +19,24 @@ import ts from 'typescript';
 export default (program: ts.Program): ts.TransformerFactory<ts.SourceFile> => {
   // Get a reference to a TypeScript TypeChecker in order to resolve types from type nodes
   const typeChecker = program.getTypeChecker();
-
   return (context: ts.TransformationContext) => (file: ts.SourceFile) => {
     const createPropertiesOfIdentifier = ts.createIdentifier('___getPropertyFilter___');
-    const createPropertiesOfImport = createRequire(
-      createPropertiesOfIdentifier,
-      'ts-reflection/helpers/createPropertiesOf',
-      'createPropertiesOf',
-    );
 
+    let createPropertiesOfImport: ts.Statement[];
+    const moduleType = context.getCompilerOptions().module;
+    if (moduleType && [ModuleKind.ES2015, ModuleKind.ES2020, ModuleKind.ESNext].includes(moduleType)) {
+      createPropertiesOfImport = createImport(
+        createPropertiesOfIdentifier,
+        'ts-reflection/helpers/createPropertiesOf',
+        'createPropertiesOf',
+      );
+    } else {
+      createPropertiesOfImport = createRequire(
+        createPropertiesOfIdentifier,
+        'ts-reflection/helpers/createPropertiesOf',
+        'createPropertiesOf',
+      );
+    }
     let needsFilterPropertiesImport = false;
 
     // First transform the file
@@ -64,7 +73,7 @@ export default (program: ts.Program): ts.TransformerFactory<ts.SourceFile> => {
 
     if (needsFilterPropertiesImport) {
       return ts.updateSourceFileNode(transformedFile, [
-        ...(needsFilterPropertiesImport ? [createPropertiesOfImport] : []),
+        ...(needsFilterPropertiesImport ? createPropertiesOfImport : []),
         ...transformedFile.statements,
       ]);
     }
